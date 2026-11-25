@@ -1,0 +1,36 @@
+# Tissue (agent-based) layer. Units: micrometres, minutes. Cell type names come from engine.yaml;
+# a type not listed under `types:` uses `defaults:`.
+
+dt_mech_min: 0.1                # mechanics / motility substep (PhysiCell default)
+burn_in_h: 48                   # genes run this long on the still tissue before t = 0 (with virtual divisions)
+calibration_rounds: 4           # burn-in split into rounds; after each, gene means are nudged back to baseline
+
+init:
+  source: synthetic             # synthetic | reference
+  synthetic:
+    cells: {tumor: 1000, tcell: 1000, macrophage: 1000}   # count per type
+    cells_default: 1000         # for types not listed in `cells`
+    packing: 0.9                # fraction of the disc area covered by cells
+    domain_scale: 3.0           # cells are confined to a disc this many times the starting radius
+    seed: 0
+  reference:                    # crop of the reference tissue (engine.yaml baseline.reference paths)
+    crop_um: 500                # square window side
+    center_um: null             # [x, y]; null = the crop-sized window that best contains every type
+
+defaults:                       # PhysiCell-like defaults
+  radius: 8.41                  # um (PhysiCell default cell volume 2494 um^3)
+  repulsion: 10.0               # um/min
+  adhesion: 0.4                 # um/min
+  max_adhesion_distance: 1.25   # x radius
+  speed: 0.0                    # um/min (0 = not motile)
+  persistence_min: 1.0          # mean time between direction changes
+  division_rate: 7.2e-4         # per min (~16 h doubling time)
+  apoptosis_rate: 5.31667e-5    # per min
+  apoptosis_duration_min: 516   # dying cells stop moving/signalling, removed after this long
+
+types:                          # per-type overrides
+  tumor: {}
+  tcell: {radius: 5.0, speed: 2.0, persistence_min: 5.0, division_rate: 2.0e-4}
+  macrophage: {radius: 10.0, speed: 0.5, persistence_min: 10.0, division_rate: 0.0}
+
+contact_factor: 1.0             # signalling neighbours: distance < contact_factor x adhesion range

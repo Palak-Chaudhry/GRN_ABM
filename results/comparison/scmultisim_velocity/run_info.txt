@@ -1,0 +1,4 @@
+mode: velocity
+cells: 3000
+seconds: 100.4
+scale_k: 2.5398

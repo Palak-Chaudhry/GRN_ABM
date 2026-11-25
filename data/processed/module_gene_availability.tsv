@@ -1,0 +1,720 @@
+module	role	gene	source	in_panel	modelled	is_tf
+apoptosis	pro	CASP3	core	False	False	False
+apoptosis	pro	CASP7	core	False	False	False
+apoptosis	pro	CASP8	core	False	False	False
+apoptosis	pro	CASP9	core	False	False	False
+apoptosis	pro	BAX	core	False	False	False
+apoptosis	pro	BAK1	core	False	False	False
+apoptosis	pro	BID	core	False	False	False
+apoptosis	pro	BBC3	core	False	False	False
+apoptosis	pro	PMAIP1	core	True	True	False
+apoptosis	pro	APAF1	core	False	False	False
+apoptosis	pro	CYCS	core	False	False	False
+apoptosis	pro	FAS	core	False	False	False
+apoptosis	anti	BCL2	core	True	True	False
+apoptosis	anti	BCL2L1	core	False	False	False
+apoptosis	anti	MCL1	core	False	False	False
+apoptosis	anti	XIAP	core	False	False	False
+apoptosis	anti	BIRC5	core	True	True	False
+apoptosis	reference_set	ADD1	Apoptosis	False	False	False
+apoptosis	reference_set	AIFM3	Apoptosis	True	True	False
+apoptosis	reference_set	ANKH	Apoptosis	True	True	False
+apoptosis	reference_set	ANXA1	Apoptosis	True	True	False
+apoptosis	reference_set	APP	Apoptosis	False	False	False
+apoptosis	reference_set	ATF3	Apoptosis	True	True	True
+apoptosis	reference_set	AVPR1A	Apoptosis	True	True	False
+apoptosis	reference_set	BCAP31	Apoptosis	False	False	False
+apoptosis	reference_set	BCL10	Apoptosis	False	False	False
+apoptosis	reference_set	BCL2L10	Apoptosis	False	False	False
+apoptosis	reference_set	BCL2L11	Apoptosis	False	False	False
+apoptosis	reference_set	BCL2L2	Apoptosis	False	False	False
+apoptosis	reference_set	BGN	Apoptosis	True	True	False
+apoptosis	reference_set	BIK	Apoptosis	True	True	False
+apoptosis	reference_set	BIRC3	Apoptosis	True	True	False
+apoptosis	reference_set	BMF	Apoptosis	False	False	False
+apoptosis	reference_set	BMP2	Apoptosis	True	True	False
+apoptosis	reference_set	BNIP3L	Apoptosis	False	False	False
+apoptosis	reference_set	BRCA1	Apoptosis	True	True	True
+apoptosis	reference_set	BTG2	Apoptosis	True	True	False
+apoptosis	reference_set	BTG3	Apoptosis	False	False	False
+apoptosis	reference_set	CASP1	Apoptosis	False	False	False
+apoptosis	reference_set	CASP2	Apoptosis	False	False	False
+apoptosis	reference_set	CASP4	Apoptosis	False	False	False
+apoptosis	reference_set	CASP6	Apoptosis	False	False	False
+apoptosis	reference_set	CAV1	Apoptosis	True	True	False
+apoptosis	reference_set	CCNA1	Apoptosis	False	False	False
+apoptosis	reference_set	CCND1	Apoptosis	True	True	False
+apoptosis	reference_set	CCND2	Apoptosis	False	False	False
+apoptosis	reference_set	CD14	Apoptosis	True	True	False
+apoptosis	reference_set	CD2	Apoptosis	True	True	False
+apoptosis	reference_set	CD38	Apoptosis	False	False	False
+apoptosis	reference_set	CD44	Apoptosis	True	False	False
+apoptosis	reference_set	CD69	Apoptosis	True	True	False
+apoptosis	reference_set	CDC25B	Apoptosis	False	False	False
+apoptosis	reference_set	CDK2	Apoptosis	False	False	False
+apoptosis	reference_set	CDKN1A	Apoptosis	True	True	False
+apoptosis	reference_set	CDKN1B	Apoptosis	False	False	False
+apoptosis	reference_set	CFLAR	Apoptosis	False	False	False
+apoptosis	reference_set	CLU	Apoptosis	True	True	False
+apoptosis	reference_set	CREBBP	Apoptosis	False	False	False
+apoptosis	reference_set	CTH	Apoptosis	False	False	False
+apoptosis	reference_set	CTNNB1	Apoptosis	False	False	False
+apoptosis	reference_set	CYLD	Apoptosis	False	False	False
+apoptosis	reference_set	DAP	Apoptosis	False	False	False
+apoptosis	reference_set	DAP3	Apoptosis	False	False	False
+apoptosis	reference_set	DCN	Apoptosis	False	False	False
+apoptosis	reference_set	DDIT3	Apoptosis	False	False	True
+apoptosis	reference_set	DFFA	Apoptosis	False	False	False
+apoptosis	reference_set	DIABLO	Apoptosis	False	False	False
+apoptosis	reference_set	DNAJA1	Apoptosis	False	False	False
+apoptosis	reference_set	DNAJC3	Apoptosis	False	False	False
+apoptosis	reference_set	DNM1L	Apoptosis	False	False	False
+apoptosis	reference_set	DPYD	Apoptosis	False	False	False
+apoptosis	reference_set	EBP	Apoptosis	False	False	False
+apoptosis	reference_set	EGR3	Apoptosis	True	True	True
+apoptosis	reference_set	EMP1	Apoptosis	True	True	False
+apoptosis	reference_set	ENO2	Apoptosis	True	True	False
+apoptosis	reference_set	ERBB2	Apoptosis	True	True	False
+apoptosis	reference_set	ERBB3	Apoptosis	True	True	False
+apoptosis	reference_set	EREG	Apoptosis	True	True	False
+apoptosis	reference_set	ETF1	Apoptosis	False	False	False
+apoptosis	reference_set	F2	Apoptosis	False	False	False
+apoptosis	reference_set	F2R	Apoptosis	True	True	False
+apoptosis	reference_set	FASLG	Apoptosis	False	False	False
+apoptosis	reference_set	FDXR	Apoptosis	True	True	False
+apoptosis	reference_set	FEZ1	Apoptosis	False	False	False
+apoptosis	reference_set	GADD45A	Apoptosis	False	False	False
+apoptosis	reference_set	GADD45B	Apoptosis	True	True	False
+apoptosis	reference_set	GCH1	Apoptosis	False	False	False
+apoptosis	reference_set	GNA15	Apoptosis	False	False	False
+apoptosis	reference_set	GPX1	Apoptosis	False	False	False
+apoptosis	reference_set	GPX3	Apoptosis	False	False	False
+apoptosis	reference_set	GPX4	Apoptosis	False	False	False
+apoptosis	reference_set	GSN	Apoptosis	True	True	False
+apoptosis	reference_set	GSR	Apoptosis	False	False	False
+apoptosis	reference_set	GSTM1	Apoptosis	False	False	False
+apoptosis	reference_set	GUCY2D	Apoptosis	False	False	False
+apoptosis	reference_set	H1-0	Apoptosis	True	False	False
+apoptosis	reference_set	HGF	Apoptosis	False	False	False
+apoptosis	reference_set	HMGB2	Apoptosis	True	True	False
+apoptosis	reference_set	HMOX1	Apoptosis	True	True	False
+apoptosis	reference_set	HSPB1	Apoptosis	True	True	False
+apoptosis	reference_set	IER3	Apoptosis	True	True	False
+apoptosis	reference_set	IFITM3	Apoptosis	False	False	False
+apoptosis	reference_set	IFNB1	Apoptosis	False	False	False
+apoptosis	reference_set	IFNGR1	Apoptosis	False	False	False
+apoptosis	reference_set	IGF2R	Apoptosis	False	False	False
+apoptosis	reference_set	IGFBP6	Apoptosis	True	True	False
+apoptosis	reference_set	IL18	Apoptosis	False	False	False
+apoptosis	reference_set	IL1A	Apoptosis	False	False	False
+apoptosis	reference_set	IL1B	Apoptosis	True	True	False
+apoptosis	reference_set	IL6	Apoptosis	True	True	False
+apoptosis	reference_set	IRF1	Apoptosis	True	True	True
+apoptosis	reference_set	ISG20	Apoptosis	False	False	False
+apoptosis	reference_set	JUN	Apoptosis	True	True	True
+apoptosis	reference_set	KRT18	Apoptosis	False	False	False
+apoptosis	reference_set	LEF1	Apoptosis	False	False	True
+apoptosis	reference_set	LGALS3	Apoptosis	True	True	False
+apoptosis	reference_set	LMNA	Apoptosis	False	False	False
+apoptosis	reference_set	LUM	Apoptosis	True	True	False
+apoptosis	reference_set	MADD	Apoptosis	False	False	False
+apoptosis	reference_set	MGMT	Apoptosis	False	False	False
+apoptosis	reference_set	MMP2	Apoptosis	True	True	False
+apoptosis	reference_set	NEDD9	Apoptosis	True	True	False
+apoptosis	reference_set	NEFH	Apoptosis	False	False	False
+apoptosis	reference_set	PAK1	Apoptosis	False	False	False
+apoptosis	reference_set	PDCD4	Apoptosis	False	False	False
+apoptosis	reference_set	PDGFRB	Apoptosis	True	True	False
+apoptosis	reference_set	PEA15	Apoptosis	False	False	False
+apoptosis	reference_set	PLAT	Apoptosis	True	True	False
+apoptosis	reference_set	PLCB2	Apoptosis	True	True	False
+apoptosis	reference_set	PLPPR4	Apoptosis	True	True	False
+apoptosis	reference_set	PPP2R5B	Apoptosis	False	False	False
+apoptosis	reference_set	PPP3R1	Apoptosis	False	False	False
+apoptosis	reference_set	PPT1	Apoptosis	True	True	False
+apoptosis	reference_set	PRF1	Apoptosis	True	True	False
+apoptosis	reference_set	PSEN1	Apoptosis	False	False	False
+apoptosis	reference_set	PSEN2	Apoptosis	False	False	False
+apoptosis	reference_set	PTK2	Apoptosis	False	False	False
+apoptosis	reference_set	RARA	Apoptosis	False	False	True
+apoptosis	reference_set	RELA	Apoptosis	False	False	True
+apoptosis	reference_set	RETSAT	Apoptosis	False	False	False
+apoptosis	reference_set	RHOB	Apoptosis	False	False	False
+apoptosis	reference_set	RHOT2	Apoptosis	False	False	False
+apoptosis	reference_set	RNASEL	Apoptosis	False	False	False
+apoptosis	reference_set	ROCK1	Apoptosis	False	False	False
+apoptosis	reference_set	SAT1	Apoptosis	True	True	False
+apoptosis	reference_set	SATB1	Apoptosis	False	False	False
+apoptosis	reference_set	SC5D	Apoptosis	False	False	False
+apoptosis	reference_set	SLC20A1	Apoptosis	True	True	False
+apoptosis	reference_set	SMAD7	Apoptosis	False	False	False
+apoptosis	reference_set	SOD1	Apoptosis	True	True	False
+apoptosis	reference_set	SOD2	Apoptosis	True	True	False
+apoptosis	reference_set	SPTAN1	Apoptosis	False	False	False
+apoptosis	reference_set	SQSTM1	Apoptosis	False	False	False
+apoptosis	reference_set	TAP1	Apoptosis	True	True	False
+apoptosis	reference_set	TGFB2	Apoptosis	True	True	False
+apoptosis	reference_set	TGFBR3	Apoptosis	True	True	False
+apoptosis	reference_set	TIMP1	Apoptosis	True	True	False
+apoptosis	reference_set	TIMP2	Apoptosis	True	True	False
+apoptosis	reference_set	TIMP3	Apoptosis	True	True	False
+apoptosis	reference_set	TNF	Apoptosis	False	False	False
+apoptosis	reference_set	TNFRSF12A	Apoptosis	False	False	False
+apoptosis	reference_set	TNFSF10	Apoptosis	True	False	False
+apoptosis	reference_set	TOP2A	Apoptosis	True	True	False
+apoptosis	reference_set	TSPO	Apoptosis	False	False	False
+apoptosis	reference_set	TXNIP	Apoptosis	True	True	False
+apoptosis	reference_set	VDAC2	Apoptosis	False	False	False
+apoptosis	reference_set	WEE1	Apoptosis	True	True	False
+proliferation	pro	CCND1	core	True	True	False
+proliferation	pro	CCNE1	core	True	True	False
+proliferation	pro	E2F1	core	True	True	True
+proliferation	pro	MYC	core	True	True	True
+proliferation	pro	CDK4	core	True	True	False
+proliferation	pro	CDK2	core	False	False	False
+proliferation	pro	PCNA	core	True	True	False
+proliferation	pro	MKI67	core	True	True	False
+proliferation	pro	TOP2A	core	True	True	False
+proliferation	pro	CCNB1	core	True	True	False
+proliferation	pro	CDK1	core	True	True	False
+proliferation	pro	MCM2	core	True	True	False
+proliferation	anti	CDKN1A	core	True	True	False
+proliferation	anti	CDKN1B	core	False	False	False
+proliferation	anti	CDKN2A	core	True	True	False
+proliferation	anti	RB1	core	True	True	False
+proliferation	anti	TP53	core	True	True	True
+proliferation	reference_set	ABL1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	AK2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	AMD1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	ANP32E	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	ARID4A	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	ASF1A	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	ASF1B	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	ATAD2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	ATF5	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	ATRX	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	AURKA	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	AURKB	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	BARD1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	BCL3	G2-M Checkpoint; E2F Targets	True	True	True
+proliferation	reference_set	BIRC5	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	BRCA1	G2-M Checkpoint; E2F Targets	True	True	True
+proliferation	reference_set	BRCA2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	BRMS1L	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	BUB1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	BUB1B	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	BUB3	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CASP8AP2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CBX1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CBX5	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	CCNA2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CCNB2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CCNF	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CCNT1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CCP110	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CDC20	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CDC25A	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CDC25B	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CDC27	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CDC45	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CDC6	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CDC7	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CDCA3	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CDCA8	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CDKN2C	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CDKN3	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CENPA	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CENPE	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CENPF	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CENPM	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CHAF1A	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CHEK1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CHEK2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CHMP1A	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CIT	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CKS1B	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CKS2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	CNOT9	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CSE1L	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CTCF	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	CTPS1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CUL1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CUL3	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CUL4A	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	CUL5	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	DBF4	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	DCK	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	DCLRE1B	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	DCTPP1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	DDX39A	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	DEK	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	DEPDC1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	DIAPH3	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	DKC1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	DLGAP5	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	DMD	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	DNMT1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	DONSON	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	DR1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	DSCC1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	DTYMK	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	DUT	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	E2F2	G2-M Checkpoint; E2F Targets	True	True	True
+proliferation	reference_set	E2F3	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	E2F4	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	E2F8	G2-M Checkpoint; E2F Targets	True	True	True
+proliferation	reference_set	EED	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	EFNA5	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	EGF	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	EIF2S1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	ESPL1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	EWSR1	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	EXO1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	EXOSC8	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	EZH2	G2-M Checkpoint; E2F Targets	True	True	True
+proliferation	reference_set	FANCC	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	FBXO5	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	FOXN3	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	G3BP1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	GINS1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	GINS2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	GINS3	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	GINS4	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	GSPT1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	H2AX	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	H2AZ1	G2-M Checkpoint; E2F Targets	True	False	False
+proliferation	reference_set	H2AZ2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	H2BC12	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	HELLS	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	HIF1A	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	HIRA	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	HMGA1	G2-M Checkpoint; E2F Targets	True	True	True
+proliferation	reference_set	HMGB2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	HMGB3	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	HMGN2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	HMMR	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	HNRNPD	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	HNRNPU	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	HOXC10	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	HSPA8	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	HUS1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	ILF3	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	INCENP	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	ING3	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	IPO7	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	JPT1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	KATNA1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	KIF11	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	KIF15	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	KIF18B	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	KIF20B	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	KIF22	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	KIF23	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	KIF2C	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	KIF4A	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	KIF5B	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	KMT5A	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	KNL1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	KPNA2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	KPNB1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	LBR	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	LIG1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	LIG3	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	LMNB1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	LUC7L3	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	LYAR	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	MAD2L1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	MAP3K20	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	MAPK14	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	MARCKS	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	MCM3	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	MCM4	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	MCM5	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	MCM6	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	MCM7	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	MEIS1	G2-M Checkpoint; E2F Targets	True	True	True
+proliferation	reference_set	MEIS2	G2-M Checkpoint; E2F Targets	True	True	True
+proliferation	reference_set	MELK	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	MLH1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	MMS22L	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	MNAT1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	MRE11	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	MSH2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	MT2A	G2-M Checkpoint; E2F Targets	True	False	False
+proliferation	reference_set	MTF2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	MTHFD2	G2-M Checkpoint; E2F Targets	True	False	False
+proliferation	reference_set	MXD3	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	MYBL2	G2-M Checkpoint; E2F Targets	True	True	True
+proliferation	reference_set	NAA38	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NAP1L1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NASP	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NBN	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NCAPD2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NCL	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NDC80	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	NEK2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	NME1	G2-M Checkpoint; E2F Targets	True	False	False
+proliferation	reference_set	NOLC1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NOP56	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	NOTCH2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NSD2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	NUDT21	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NUMA1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NUP107	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	NUP153	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NUP205	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NUP50	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NUP98	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	NUSAP1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	ODC1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	ODF2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	ORC2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	ORC5	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	ORC6	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	PA2G4	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PAFAH1B1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PAICS	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PAN2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PBK	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	PDS5B	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PHF5A	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PLK1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	PLK4	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	PML	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PMS2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PNN	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	POLA2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	POLD1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	POLD2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	POLD3	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	POLE	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	POLE4	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	POLQ	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	POP7	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	PPM1D	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PPP1R8	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PRC1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	PRDX4	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PRIM2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PRKDC	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PRMT5	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PRPF4B	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PRPS1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PSIP1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PSMC3IP	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PTTG1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	PTTG3P	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	PURA	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	RACGAP1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RAD1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RAD21	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	RAD23B	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RAD50	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RAD51AP1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	RAD51C	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	RAD54L	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	RAN	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RANBP1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RASAL2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RBBP7	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RBL1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RBM14	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RFC1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RFC2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RFC3	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	RNASEH2A	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	RPA1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RPA2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RPA3	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RPS6KA5	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	RRM2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	SAP30	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	SFPQ	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SHMT1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SLBP	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	SLC12A2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	SLC38A1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SLC7A1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SLC7A5	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SMAD3	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	SMARCC1	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	SMC1A	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SMC2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SMC3	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	SMC4	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	SMC6	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SNRPB	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	SNRPD1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SPAG5	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	SPC24	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	SPC25	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	SQLE	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	SRSF1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SRSF10	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SRSF2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SS18	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SSRP1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	STAG1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	STIL	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	STMN1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SUV39H1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	SYNCRIP	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	TACC3	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	TBRG4	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	TCF19	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	TENT4A	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	TFDP1	G2-M Checkpoint; E2F Targets	False	False	True
+proliferation	reference_set	TFRC	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	TGFB1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	TIMELESS	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	TIPIN	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	TK1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	TLE3	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	TMPO	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	TNPO2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	TOP1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	TPX2	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	TRA2B	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	TRAIP	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	TRIP13	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	TROAP	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	TTK	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	TUBB	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	TUBG1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	UBE2C	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	UBE2S	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	UBE2T	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	UBR7	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	UCK2	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	UNG	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	UPF1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	USP1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	WDR90	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	WEE1	G2-M Checkpoint; E2F Targets	True	True	False
+proliferation	reference_set	WRN	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	XPO1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	XRCC6	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	YTHDC1	G2-M Checkpoint; E2F Targets	False	False	False
+proliferation	reference_set	ZW10	G2-M Checkpoint; E2F Targets	False	False	False
+migration	pro	VIM	core	True	True	False
+migration	pro	SNAI1	core	False	False	True
+migration	pro	SNAI2	core	False	False	True
+migration	pro	ZEB1	core	False	False	True
+migration	pro	TWIST1	core	False	False	True
+migration	pro	CDH2	core	True	True	False
+migration	pro	FN1	core	True	True	False
+migration	pro	MMP2	core	True	True	False
+migration	pro	MMP9	core	True	True	False
+migration	pro	ITGB1	core	False	False	False
+migration	pro	RAC1	core	False	False	False
+migration	pro	CDC42	core	False	False	False
+migration	anti	CDH1	core	True	True	False
+migration	anti	EPCAM	core	True	True	False
+migration	anti	CLDN4	core	True	True	False
+migration	reference_set	ABI3BP	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	ACTA2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	ADAM12	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	ANPEP	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	APLP1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	AREG	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	BASP1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	BDNF	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	BGN	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	BMP1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	CADM1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	CALD1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	CALU	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	CAP2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	CAPG	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	CCN1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	CCN2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	CD44	Epithelial Mesenchymal Transition	True	False	False
+migration	reference_set	CD59	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	CDH11	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	CDH6	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL11A1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL12A1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL16A1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL1A1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL1A2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL3A1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL4A1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL4A2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL5A1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL5A2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL5A3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL6A2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL6A3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL7A1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COL8A2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COLGALT1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	COMP	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	COPA	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	CRLF1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	CTHRC1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	CXCL1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	CXCL12	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	CXCL6	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	CXCL8	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	DAB2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	DCN	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	DKK1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	DPYSL3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	DST	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	ECM1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	ECM2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	EDIL3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	EFEMP2	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	ELN	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	EMP3	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	ENO2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	FAP	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	FAS	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	FBLN1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	FBLN2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	FBLN5	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	FBN1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	FBN2	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	FERMT2	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	FGF2	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	FLNA	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	FMOD	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	FOXC2	Epithelial Mesenchymal Transition	True	True	True
+migration	reference_set	FSTL1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	FSTL3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	FUCA1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	FZD8	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	GADD45A	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	GADD45B	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	GAS1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	GEM	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	GJA1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	GLIPR1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	GPC1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	GPX7	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	GREM1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	HTRA1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	ID2	Epithelial Mesenchymal Transition	True	True	True
+migration	reference_set	IGFBP2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	IGFBP3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	IGFBP4	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	IL15	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	IL32	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	IL6	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	INHBA	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	ITGA2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	ITGA5	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	ITGAV	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	ITGB3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	ITGB5	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	JUN	Epithelial Mesenchymal Transition	True	True	True
+migration	reference_set	LAMA1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	LAMA2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	LAMA3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	LAMC1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	LAMC2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	LGALS1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	LOX	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	LOXL1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	LOXL2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	LRP1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	LRRC15	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	LUM	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	MAGEE1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	MATN2	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	MATN3	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	MCM7	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	MEST	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	MFAP5	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	MGP	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	MMP1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	MMP14	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	MMP3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	MSX1	Epithelial Mesenchymal Transition	False	False	True
+migration	reference_set	MXRA5	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	MYL9	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	MYLK	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	NID2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	NNMT	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	NOTCH2	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	NT5E	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	NTM	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	OXTR	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	P3H1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	PCOLCE	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	PCOLCE2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	PDGFRB	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	PDLIM4	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	PFN2	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	PLAUR	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	PLOD1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	PLOD2	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	PLOD3	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	PMEPA1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	PMP22	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	POSTN	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	PPIB	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	PRRX1	Epithelial Mesenchymal Transition	False	False	True
+migration	reference_set	PRSS2	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	PTHLH	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	PTX3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	PVR	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	QSOX1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	RGS4	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	RHOB	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	SAT1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SCG2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SDC1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SDC4	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SERPINE1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SERPINE2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SERPINH1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	SFRP1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SFRP4	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SGCB	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	SGCD	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	SGCG	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	SLC6A8	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	SLIT2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SLIT3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SNTB1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SPARC	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SPOCK1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	SPP1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	TAGLN	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	TFPI2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	TGFB1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	TGFBI	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	TGFBR3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	TGM2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	THBS1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	THBS2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	THY1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	TIMP1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	TIMP3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	TNC	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	TNFAIP3	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	TNFRSF11B	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	TNFRSF12A	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	TPM1	Epithelial Mesenchymal Transition	False	False	False
+migration	reference_set	TPM2	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	TPM4	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	VCAM1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	VCAN	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	VEGFA	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	VEGFC	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	WIPF1	Epithelial Mesenchymal Transition	True	True	False
+migration	reference_set	WNT5A	Epithelial Mesenchymal Transition	False	False	False
+chemotaxis	pro	CXCR4	core	True	True	False
+chemotaxis	pro	CCR7	core	True	True	False
+chemotaxis	pro	ITGAL	core	True	True	False
+necrosis	pro	RIPK1	core	False	False	False
+necrosis	pro	RIPK3	core	True	True	False
+necrosis	pro	MLKL	core	True	True	False
+necrosis	anti	CASP8	core	False	False	False
+necrosis	reference_set	DNM1L	Necroptotic Process (GO:0070266)	False	False	False
+necrosis	reference_set	FASLG	Necroptotic Process (GO:0070266)	False	False	False
+necrosis	reference_set	IPMK	Necroptotic Process (GO:0070266)	False	False	False
+necrosis	reference_set	ITPK1	Necroptotic Process (GO:0070266)	True	True	False
+necrosis	reference_set	PGAM5	Necroptotic Process (GO:0070266)	False	False	False
+necrosis	reference_set	TRPM7	Necroptotic Process (GO:0070266)	False	False	False

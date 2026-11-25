@@ -1,0 +1,71 @@
+engine:
+  network_dir: data/processed/network
+  cell_types:
+    tumor: 11q13 High Grade DCIS Cells
+    tcell: T Lymphocytes
+    macrophage: Macrophages
+  baseline:
+    source: reference
+    reference:
+      table: data/processed/reference_type_expression.tsv
+      dir: /vast/djishnu/Palak/Collabs/Consensus_signaling/data/atera_breast
+      labels_h5ad: atera_breast_subset_hvg3500_biomarkers.h5ad
+    synthetic:
+      median_counts: 0.2
+      gene_sd_log: 1.5
+      type_sd_log: 1.0
+      seed: 0
+  dt_min: 6.0
+  capture: 0.2
+  splice_halftime_min: 15.0
+  burst_off_rate: 0.05
+  max_on_fraction: 0.5
+  hill_n: 2
+  lr_gain: 1.0
+  min_level: 0.01
+  max_log_rate_change: 8.0
+  seed: 0
+abm:
+  dt_mech_min: 0.1
+  burn_in_h: 48
+  calibration_rounds: 4
+  init:
+    source: synthetic
+    synthetic:
+      cells:
+        tumor: 1000
+        tcell: 1000
+        macrophage: 1000
+      cells_default: 1000
+      packing: 0.9
+      domain_scale: 3.0
+      seed: 0
+    reference:
+      crop_um: 500
+      center_um: null
+  defaults:
+    radius: 8.41
+    repulsion: 10.0
+    adhesion: 0.4
+    max_adhesion_distance: 1.25
+    speed: 0.0
+    persistence_min: 1.0
+    division_rate: 0.00072
+    apoptosis_rate: 5.31667e-05
+    apoptosis_duration_min: 516
+  types:
+    tumor: {}
+    tcell:
+      radius: 5.0
+      speed: 2.0
+      persistence_min: 5.0
+      division_rate: 0.0002
+    macrophage:
+      radius: 10.0
+      speed: 0.5
+      persistence_min: 10.0
+      division_rate: 0.0
+  contact_factor: 1.0
+hours: 72.0
+snapshots: 25
+cells_recorded: 105770

@@ -1,0 +1,21 @@
+# Example: 5 cell types, no reference data. Everything else as in engine.yaml.
+network_dir: data/processed/network
+
+cell_types: {A: null, B: null, C: null, D: null, E: null}
+
+baseline:
+  source: synthetic
+  synthetic: {median_counts: 0.2, gene_sd_log: 1.5, type_sd_log: 1.0, seed: 0}
+
+dt_min: 6.0
+capture: 0.2
+splice_halftime_min: 15.0
+burst_off_rate: 0.05
+max_on_fraction: 0.5
+hill_n: 2
+lr_gain: 1.0
+ligand_half_response: neighbourhood   # neighbourhood: half-response = typical neighbourhood ligand input (dose
+                                    # matters); cell: one cell's level (signal saturates with several neighbours)
+min_level: 0.01
+max_log_rate_change: 8.0
+seed: 0

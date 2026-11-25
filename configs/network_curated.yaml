@@ -1,0 +1,49 @@
+# Network configuration -- CURATED L-R variant of network.yaml.
+# Differences: lr.downstream points at the pathway-derived receptor->TF table (signed) instead of
+# null (random TFs), and n_tf is raised so the curated effectors do not crowd out the
+# degree-ranked TFs of the original network. Everything else is identical.
+
+grn:
+  path: /vast/djishnu/Palak/Collabs/Consensus_signaling/SpaceTravLR/data/human_base_grn.parquet
+  format: celloracle_wide   # celloracle_wide: rows = targets ('gene_short_name'), columns = TFs, 1 = edge
+                            # edge_list: table with columns regulator, target [, sign, weight]
+                            #            (.tsv / .csv / .parquet)
+
+lr:
+  path: /vast/djishnu/Palak/Collabs/Consensus_signaling/SpaceTravLR/data/cellchat_human.csv  # columns: ligand, receptor
+  downstream: data/processed/lr_downstream_curated.tsv   # built by scripts/04b from data/external/pathway_tfs.tsv
+                            # columns: ligand, receptor, tf, sign, weight. null = random TFs.
+
+expression: data/processed/reference_type_expression.tsv  # optional; only ranks L-R pairs. null = no reference
+                                                          # (cell types are defined in configs/engine.yaml)
+halflives: data/processed/mrna_halflife_human.tsv     # columns gene, halflife_h (hours); genes not in it get
+                                                      # the median. Built for human by scripts/01
+modules:                    # behaviour gene sets: pro genes raise the behaviour, anti genes lower it
+  apoptosis:
+    pro:  [CASP3, CASP7, CASP8, CASP9, BAX, BAK1, BID, BBC3, PMAIP1, APAF1, CYCS, FAS]
+    anti: [BCL2, BCL2L1, MCL1, XIAP, BIRC5]
+  proliferation:
+    pro:  [CCND1, CCNE1, E2F1, MYC, CDK4, CDK2, PCNA, MKI67, TOP2A, CCNB1, CDK1, MCM2]
+    anti: [CDKN1A, CDKN1B, CDKN2A, RB1, TP53]
+  migration:
+    pro:  [VIM, SNAI1, SNAI2, ZEB1, TWIST1, CDH2, FN1, MMP2, MMP9, ITGB1, RAC1, CDC42]
+    anti: [CDH1, EPCAM, CLDN4]
+  chemotaxis:
+    pro:  [CXCR4, CCR7, ITGAL]
+    anti: []
+  necrosis:
+    pro:  [RIPK1, RIPK3, MLKL]
+    anti: [CASP8]
+
+sizes:
+  n_tf: 70                       # 50 in network.yaml; +20 so curated effectors are added, not substituted
+  n_lr_pairs: 50
+  pairs_per_module_gene: 2       # module-gene L-R pairs picked first, at most this many per gene
+  max_regulators_per_target: 6   # 0 = keep all edges. Dense priors (e.g. ~200 TFs per gene) need a cap.
+  lr_downstream_tfs: 3           # only used when lr.downstream is null
+
+defaults:                        # used only where the input does not provide a value
+  seed: 0
+  activator_fraction: 0.7        # P(edge is activating) when the GRN has no sign
+  weight_lognormal: [0.0, 0.5]   # |weight| ~ LogNormal(mu, sigma) when the GRN has no weight
+  lr_weight: 1.0

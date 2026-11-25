@@ -1,0 +1,30 @@
+# Gene engine. Units: minutes, molecules.
+network_dir: data/processed/network
+
+cell_types:            # any number. name: reference label (only used when baseline.source = reference)
+  tumor: 11q13 High Grade DCIS Cells
+  tcell: T Lymphocytes
+  macrophage: Macrophages
+
+baseline:              # each type's starting expression; the engine is calibrated to reproduce it
+  source: reference    # reference | synthetic
+  reference:
+    table: data/processed/reference_type_expression.tsv   # columns mean_<type>; built by scripts/03
+    dir: /vast/djishnu/Palak/Collabs/Consensus_signaling/data/atera_breast
+    labels_h5ad: atera_breast_subset_hvg3500_biomarkers.h5ad
+  synthetic:
+    median_counts: 0.2     # median observed counts per gene and cell
+    gene_sd_log: 1.5       # spread of gene levels (natural log)
+    type_sd_log: 1.0       # how different cell types are from each other (natural log)
+    seed: 0
+
+dt_min: 6.0                 # one ABM phenotype step
+capture: 0.2                # observed counts = Poisson(capture x spliced molecules)
+splice_halftime_min: 15.0   # unspliced -> spliced, same for all genes
+burst_off_rate: 0.05        # promoter ON -> OFF per minute (mean burst 20 min)
+max_on_fraction: 0.5        # the highest-expressing type of each gene sits at this ON fraction
+hill_n: 2                   # Hill coefficient; half-response = mean level of the regulator across types
+lr_gain: 1.0                # multiplies L-R -> TF weights (0 switches signalling off)
+min_level: 0.01             # floor for genes at ~0 in a type (molecules)
+max_log_rate_change: 8.0    # clip on the exponent, for numerical safety
+seed: 0

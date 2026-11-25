@@ -1,0 +1,809 @@
+<title>GRN-ABM Final Run</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+/* Layout: lab-notebook column; a sticky run strip, then the playback as the hero, then evidence top-down. */
+:root{
+  --bg:#F2F5F6; --surface:#FFFFFF; --surface-2:#E9EEF0;
+  --ink:#101619; --ink-2:#44555F; --muted:#6B7F8A;
+  --line:#D6DFE3; --line-strong:#B8C6CC;
+  --accent:#0C6E7F; --accent-soft:#E0F0F3;
+  --control:#7F8E96;
+  --tumor:#1F77B4; --tcell:#E07A10; --macro:#17703A;
+  --dying:#A9B6BC; --death:#B3261E;
+  --warn:#B4532A;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --maxw:1140px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B1113; --surface:#141C20; --surface-2:#1B262B;
+    --ink:#E7EFF2; --ink-2:#AFC2CA; --muted:#7D939D;
+    --line:#243137; --line-strong:#33454D;
+    --accent:#4FC3D4; --accent-soft:#11313A;
+    --control:#8597A0;
+    --tumor:#4895D2; --tcell:#D8862A; --macro:#2A8040;
+    --dying:#4A5A61; --death:#FF6B5E;
+    --warn:#E08A5F;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B1113; --surface:#141C20; --surface-2:#1B262B;
+  --ink:#E7EFF2; --ink-2:#AFC2CA; --muted:#7D939D;
+  --line:#243137; --line-strong:#33454D;
+  --accent:#4FC3D4; --accent-soft:#11313A;
+  --control:#8597A0;
+  --tumor:#4895D2; --tcell:#D8862A; --macro:#2A8040;
+  --dying:#4A5A61; --death:#FF6B5E;
+  --warn:#E08A5F;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--sans); font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:60; background:var(--surface)}
+.wrap{
+  max-width:var(--maxw); margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+}
+@media (min-width:700px){ .wrap{padding-left:max(24px, env(safe-area-inset-left,0px)); padding-right:max(24px, env(safe-area-inset-right,0px))} }
+code{font-family:var(--mono); font-size:.86em}
+
+/* ---------- run strip ---------- */
+header.top{border-bottom:1px solid var(--line); background:var(--surface); position:sticky; top:env(safe-area-inset-top,0px); z-index:50}
+.top .wrap{display:flex; align-items:center; gap:10px 18px; justify-content:space-between; min-height:54px; flex-wrap:wrap; padding-block:8px}
+.runid{font-family:var(--mono); font-size:12.5px; color:var(--muted); letter-spacing:.01em; min-width:0}
+.runid b{color:var(--ink); font-weight:600}
+.legend{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+.lg{display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:11.5px; color:var(--ink-2)}
+.dot{width:9px; height:9px; border-radius:50%; flex:none; display:inline-block}
+.dot.ring{background:transparent!important; border:2px solid var(--dying)}
+
+/* ---------- hero ---------- */
+.hero{padding-block:40px 8px}
+.eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--accent); margin:0 0 14px}
+h1{font-size:clamp(28px,4.2vw,44px); line-height:1.1; margin:0 0 16px; font-weight:600; letter-spacing:-.022em; text-wrap:balance; max-width:24ch}
+.standfirst{font-family:var(--serif); font-size:19px; line-height:1.52; color:var(--ink-2); max-width:66ch; margin:0}
+.standfirst code{font-size:15px; color:var(--ink)}
+
+/* ---------- playback ---------- */
+.player{margin-top:28px; background:var(--surface); border:1px solid var(--line)}
+.controls{display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center; padding:12px 16px; border-bottom:1px solid var(--line)}
+.btn{
+  font:600 13px/1 var(--sans); color:var(--surface); background:var(--accent); border:0;
+  padding:9px 16px; cursor:pointer; min-width:84px; border-radius:2px;
+}
+.btn:focus-visible,.seg button:focus-visible,input[type=range]:focus-visible,select:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.timebox{font-family:var(--mono); font-size:13px; color:var(--ink); font-variant-numeric:tabular-nums; min-width:9ch}
+.timebox span{color:var(--muted)}
+.scrub{flex:1 1 220px; min-width:0; display:flex; align-items:center}
+.scrub input{width:100%; accent-color:var(--accent)}
+.seg{display:inline-flex; border:1px solid var(--line-strong); border-radius:2px; overflow:hidden}
+.seg button{font:500 12px/1 var(--mono); background:transparent; color:var(--ink-2); border:0; padding:8px 10px; cursor:pointer}
+.seg button + button{border-left:1px solid var(--line-strong)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft); color:var(--ink)}
+.ctl{display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11.5px; color:var(--muted)}
+select{font:500 12px var(--mono); color:var(--ink); background:var(--surface); border:1px solid var(--line-strong); padding:6px 6px; border-radius:2px}
+.panes{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line)}
+@media (max-width:760px){ .panes{grid-template-columns:1fr} }
+.pane{background:var(--surface); min-width:0; display:flex; flex-direction:column}
+.panehead{display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:12px 16px 4px; flex-wrap:wrap}
+.panehead h3{margin:0; font-size:14.5px; font-weight:600}
+.panehead .tag{font-family:var(--mono); font-size:11px; color:var(--muted)}
+.stage{position:relative; width:100%; aspect-ratio:1/1; max-width:100%}
+.stage canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
+.stage .msg{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:12.5px; color:var(--muted); text-align:center; padding:20px}
+.counts{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border-top:1px solid var(--line)}
+.counts div{background:var(--surface); padding:9px 12px; min-width:0}
+.counts .k{font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:5px}
+.counts .v{font-family:var(--mono); font-size:17px; font-weight:600; font-variant-numeric:tabular-nums; color:var(--ink)}
+.counts .d{font-family:var(--mono); font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums}
+.playnote{padding:10px 16px 12px; font-size:13px; color:var(--muted); border-top:1px solid var(--line); margin:0}
+
+/* ---------- sections ---------- */
+section{padding-block:46px; border-top:1px solid var(--line); margin-top:46px}
+section + section{margin-top:0}
+h2{font-size:13px; font-family:var(--mono); font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--accent); margin:0 0 8px}
+.sectlede{font-family:var(--serif); font-size:17.5px; color:var(--ink-2); max-width:68ch; margin:0 0 28px}
+
+/* ---------- endpoints ---------- */
+.endpoints{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
+.ep{background:var(--surface); padding:18px 20px; min-width:0}
+.ep .k{font-family:var(--mono); font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; display:flex; gap:6px; align-items:center}
+.ep .pair{display:flex; align-items:baseline; gap:10px; font-variant-numeric:tabular-nums; flex-wrap:wrap}
+.ep .a{font-family:var(--mono); font-size:15px; color:var(--muted)}
+.ep .arrow{color:var(--line-strong); font-size:13px}
+.ep .b{font-family:var(--mono); font-size:26px; font-weight:600; color:var(--ink); letter-spacing:-.02em}
+.ep .note{font-size:13px; color:var(--muted); margin-top:7px; line-height:1.4}
+.ep .note b{color:var(--ink-2); font-weight:500; font-family:var(--mono); font-size:12.5px}
+
+.files{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:22px}
+.file{background:var(--surface); padding:12px 18px; display:flex; gap:6px 16px; align-items:baseline; flex-wrap:wrap; min-width:0}
+.file code{font-family:var(--mono); font-size:13px; color:var(--ink); font-weight:500; overflow-wrap:anywhere}
+.file span{font-size:13.5px; color:var(--muted)}
+
+/* ---------- charts ---------- */
+.charts{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px}
+.charts.three{grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:20px}
+@media (max-width:860px){ .charts.three{grid-template-columns:1fr} }
+@media (max-width:700px){ .charts{grid-template-columns:1fr} }
+figure.chart{margin:0; background:var(--surface); border:1px solid var(--line); padding:14px 14px 10px; min-width:0}
+figure.chart figcaption{font-size:14px; font-weight:600; margin:0 0 2px; display:flex; gap:8px; align-items:baseline; flex-wrap:wrap}
+figure.chart figcaption span{font-family:var(--mono); font-size:11px; font-weight:400; color:var(--muted)}
+.plot{position:relative; width:100%; height:230px; margin-top:6px}
+.plot svg{display:block; width:100%; height:100%; overflow:visible}
+.plot text{font-family:var(--mono); font-size:11px; fill:var(--muted)}
+.plot .lbl{fill:var(--ink-2); font-size:11.5px}
+.tip{
+  position:absolute; pointer-events:none; background:var(--surface); border:1px solid var(--line-strong);
+  padding:7px 9px; font-family:var(--mono); font-size:11.5px; color:var(--ink); white-space:nowrap;
+  box-shadow:0 2px 10px rgba(0,0,0,.12); z-index:5; font-variant-numeric:tabular-nums;
+}
+.tip .tt{color:var(--muted); margin-bottom:3px}
+.tip .row{display:flex; align-items:center; gap:6px}
+.tip i{display:inline-block; width:12px; height:0; border-top:2px solid; flex:none}
+.tip i.dash{border-top-style:dashed}
+.keyrow{display:flex; gap:18px; flex-wrap:wrap; font-family:var(--mono); font-size:11.5px; color:var(--ink-2); margin:0 0 14px}
+.keyrow span{display:flex; align-items:center; gap:7px}
+.keyrow i{display:inline-block; width:22px; border-top:2px solid var(--ink-2)}
+.keyrow i.dash{border-top-style:dashed}
+.keyrow i.acc{border-color:var(--accent)} .keyrow i.ctl{border-color:var(--control)}
+details.data{margin-top:20px; background:var(--surface); border:1px solid var(--line); padding:10px 16px}
+details.data summary{cursor:pointer; font-family:var(--mono); font-size:12.5px; color:var(--ink-2)}
+
+/* ---------- findings ---------- */
+.qa{background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent); padding:20px 24px; margin-bottom:20px; min-width:0}
+.qa.flag{border-left-color:var(--warn)}
+.qa h3{margin:0 0 10px; font-size:17px; font-weight:600; letter-spacing:-.012em; text-wrap:balance}
+.qa p{margin:0 0 10px; font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink-2); max-width:72ch}
+.qa p:last-child{margin-bottom:0}
+.qa strong{color:var(--ink); font-weight:600}
+.qa code{font-size:13.5px; color:var(--ink)}
+.scroll{overflow-x:auto; margin:12px 0 12px}
+.num{width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums; min-width:440px}
+.num th,.num td{text-align:right; padding:7px 12px; border-bottom:1px solid var(--line); font-size:13.5px; color:var(--ink)}
+.num th{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); font-weight:500}
+.num td:first-child,.num th:first-child{text-align:left; font-family:var(--mono); font-size:12.5px}
+.num tr:last-child td{border-bottom:0}
+.num td.ctl{color:var(--muted)}
+
+/* ---------- figure grid ---------- */
+.grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px}
+@media (max-width:760px){ .grid{grid-template-columns:1fr} }
+.card{background:var(--surface); border:1px solid var(--line); display:flex; flex-direction:column; min-width:0}
+.card.wide{grid-column:1/-1}
+.card button.shot{display:block; width:100%; padding:0; border:0; background:#fff; cursor:zoom-in; line-height:0; border-bottom:1px solid var(--line)}
+.card button.shot:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+.card img{width:100%; height:auto; display:block}
+.card.narrow button.shot img{max-width:820px; margin:0 auto}
+.cap{padding:14px 17px 16px}
+.cap h3{margin:0 0 6px; font-size:14.5px; font-weight:600; letter-spacing:-.005em; display:flex; gap:9px; align-items:baseline}
+.cap h3 em{font-family:var(--mono); font-style:normal; font-size:11.5px; color:var(--muted); font-weight:500; flex:none}
+.cap p{margin:0; font-size:14px; color:var(--ink-2); line-height:1.48}
+.cap p + p{margin-top:7px}
+.read{color:var(--ink)!important; border-left:2px solid var(--accent); padding-left:10px; margin-top:9px!important; font-size:13.5px!important}
+
+/* ---------- lightbox ---------- */
+dialog.lb{border:0; padding:0; background:transparent; max-width:96vw; max-height:96vh}
+dialog.lb::backdrop{background:rgba(5,10,12,.88)}
+dialog.lb img{max-width:96vw; max-height:88vh; width:auto; height:auto; display:block; background:#fff; border:1px solid var(--line-strong)}
+dialog.lb .lbcap{font-family:var(--mono); font-size:12px; color:#C9D7DD; padding:10px 2px 0; display:flex; justify-content:space-between; gap:20px}
+dialog.lb button{background:none; border:0; color:#C9D7DD; font-family:var(--mono); font-size:12px; cursor:pointer; text-decoration:underline; padding:0}
+
+footer{padding-block:34px 60px; border-top:1px solid var(--line); color:var(--muted); font-size:13.5px}
+footer p{max-width:90ch}
+footer pre{font-family:var(--mono); font-size:12px; color:var(--ink-2); background:var(--surface); border:1px solid var(--line); padding:12px 14px; overflow-x:auto; line-height:1.6}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<header class="top"><div class="wrap">
+  <div class="runid">run <b>main_72h_pressure_death</b> · 72 h · 25 snapshots · network_curated · rules_pressure_death</div>
+  <div class="legend">
+    <span class="lg"><i class="dot" style="background:var(--tumor)"></i>tumour</span>
+    <span class="lg"><i class="dot" style="background:var(--tcell)"></i>T cell</span>
+    <span class="lg"><i class="dot" style="background:var(--macro)"></i>macrophage</span>
+    <span class="lg"><i class="dot" style="background:var(--dying)"></i>dying</span>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+<div class="hero">
+  <p class="eyebrow">GRN_ABM · final model · pressure → apoptosis</p>
+  <h1>Crowding now kills, and the tissue holds its own density</h1>
+  <p class="standfirst">The run starts with 1,000 tumour cells, 1,000 T cells and 1,000 macrophages and steps them for 72 simulated hours on the curated 167-gene network. The final model adds one rule to the earlier run: mechanical pressure raises a cell’s apoptosis rate (<code>half_max 3.0</code>, <code>max 2e‑3/min</code>, Hill 4). Everything else is identical, including the seed. The earlier run, <code>main_72h_curated</code>, is the control throughout this page.</p>
+
+  <div class="player" id="player">
+    <div class="controls">
+      <button class="btn" id="play" type="button" disabled>Play</button>
+      <div class="timebox" id="tbox">t = <b>72.0</b> <span>h</span></div>
+      <div class="scrub"><input id="scrub" type="range" min="0" max="72" step="0.5" value="72" aria-label="Simulated time in hours" disabled></div>
+      <div class="ctl"><label for="speed">speed</label>
+        <select id="speed"><option value="2">2 h/s</option><option value="4" selected>4 h/s</option><option value="8">8 h/s</option></select></div>
+      <div class="ctl">colour
+        <span class="seg" role="group" aria-label="Colour cells by">
+          <button type="button" id="m-type" aria-pressed="true">cell type</button><button type="button" id="m-death" aria-pressed="false">dying only</button>
+        </span></div>
+      <div class="ctl">view
+        <span class="seg" role="group" aria-label="Field of view">
+          <button type="button" id="v-tissue" aria-pressed="true">tissue</button><button type="button" id="v-domain" aria-pressed="false">whole domain</button>
+        </span></div>
+    </div>
+    <div class="panes">
+      <div class="pane" data-run="pdeath">
+        <div class="panehead"><h3>Final model</h3><span class="tag">pressure → apoptosis on</span></div>
+        <div class="stage"><canvas aria-label="Cell positions in the final-model run"></canvas><div class="msg">Loading cell tracks…</div></div>
+        <div class="counts">
+          <div><div class="k"><i class="dot" style="background:var(--tumor)"></i>tumour</div><div class="v" data-c="0">–</div></div>
+          <div><div class="k"><i class="dot" style="background:var(--tcell)"></i>T cell</div><div class="v" data-c="1">–</div></div>
+          <div><div class="k"><i class="dot" style="background:var(--macro)"></i>macro</div><div class="v" data-c="2">–</div></div>
+          <div><div class="k"><i class="dot" style="background:var(--dying)"></i>dying</div><div class="v" data-c="3">–</div></div>
+        </div>
+      </div>
+      <div class="pane" data-run="control">
+        <div class="panehead"><h3>Control</h3><span class="tag">main_72h_curated · no pressure → death</span></div>
+        <div class="stage"><canvas aria-label="Cell positions in the control run"></canvas><div class="msg">Loading cell tracks…</div></div>
+        <div class="counts">
+          <div><div class="k"><i class="dot" style="background:var(--tumor)"></i>tumour</div><div class="v" data-c="0">–</div></div>
+          <div><div class="k"><i class="dot" style="background:var(--tcell)"></i>T cell</div><div class="v" data-c="1">–</div></div>
+          <div><div class="k"><i class="dot" style="background:var(--macro)"></i>macro</div><div class="v" data-c="2">–</div></div>
+          <div><div class="k"><i class="dot" style="background:var(--dying)"></i>dying</div><div class="v" data-c="3">–</div></div>
+        </div>
+      </div>
+    </div>
+    <p class="playnote">Recorded positions every 30 min (from <code>tracks.npz</code>), interpolated in between. Counts are live cells, plus cells mid-apoptosis, which stop moving and are removed after 8.6 h. Cells are drawn at their true radius: tumour 8.4 µm, T cell 5 µm, macrophage 10 µm. The scale bar is 200 µm.</p>
+  </div>
+</div>
+
+<section id="endpoints">
+  <h2>Endpoints at 72 h</h2>
+  <p class="sectlede">Final model first. The control’s value is in each note. Divisions barely changed. Deaths rose by 40%, and the tissue reaches the same radius with 22% fewer live cells.</p>
+  <div class="endpoints">
+    <div class="ep"><div class="k">Live cells</div>
+      <div class="pair"><span class="a">3,000</span><span class="arrow">→</span><span class="b">5,651</span></div>
+      <div class="note">plus 1,002 dying · control <b>7,225</b></div></div>
+    <div class="ep"><div class="k"><i class="dot" style="background:var(--tumor)"></i>Tumour</div>
+      <div class="pair"><span class="a">1,000</span><span class="arrow">→</span><span class="b">3,608</span></div>
+      <div class="note">6,352 divisions, 3,744 deaths · control <b>4,261</b></div></div>
+    <div class="ep"><div class="k"><i class="dot" style="background:var(--tcell)"></i>T cell</div>
+      <div class="pair"><span class="a">1,000</span><span class="arrow">→</span><span class="b">1,392</span></div>
+      <div class="note">1,882 divisions, 1,490 deaths · control <b>1,816</b></div></div>
+    <div class="ep"><div class="k"><i class="dot" style="background:var(--macro)"></i>Macrophage</div>
+      <div class="pair"><span class="a">1,000</span><span class="arrow">→</span><span class="b">651</span></div>
+      <div class="note">616 divisions, 965 deaths · control <b>1,148</b>. The only type that shrinks.</div></div>
+    <div class="ep"><div class="k">Divisions / deaths</div>
+      <div class="pair"><span class="b">8,850</span><span class="arrow">/</span><span class="b">6,199</span></div>
+      <div class="note">over 72 h · control <b>8,647 / 4,422</b></div></div>
+    <div class="ep"><div class="k">Median apoptosis rate</div>
+      <div class="pair"><span class="b">2.98×</span><span class="a">base</span></div>
+      <div class="note">rule-set rate ÷ base (5.3e‑5/min), live cells at 72 h · control <b>1.11×</b></div></div>
+    <div class="ep"><div class="k">Tissue radius</div>
+      <div class="pair"><span class="a">470</span><span class="arrow">→</span><span class="b">779 µm</span></div>
+      <div class="note">95th percentile from centre · control <b>783 µm</b></div></div>
+    <div class="ep"><div class="k">Contacts per cell</div>
+      <div class="pair"><span class="a">4.47</span><span class="arrow">→</span><span class="b">3.32</span></div>
+      <div class="note">signalling contacts · control <b>4.43</b></div></div>
+  </div>
+
+  <div class="files">
+    <div class="file"><code>adata_t0.h5ad</code><span>3,000 × 167 at t = 0 h · identical to the control’s t = 0</span></div>
+    <div class="file"><code>adata_tfinal.h5ad</code><span>6,653 × 167 at t = 72 h, 1,002 of them dying · mean 75.6 observed counts per cell (control 79.4)</span></div>
+    <div class="file"><code>snapshots.h5ad</code><span>116,129 cell-snapshots × 167 genes over all 25 time points, with true and observed spliced and unspliced counts, rules, signals and positions</span></div>
+    <div class="file"><code>tracks.npz</code> <code>events.tsv</code> <code>grn_activity.npz</code> <code>lr_flow.npz</code> <code>tf_dynamics.tsv</code><span>positions every 6 min, every division and death, TF activation, ligand flux, all-TF trajectories</span></div>
+    <div class="file"><code>results/runs/main_72h_pressure_death/</code><span>all of the above, plus <code>plots/</code>, <code>analysis/</code> and copies of the configs used</span></div>
+  </div>
+</section>
+
+<section id="effect">
+  <h2>What the death rule changed</h2>
+  <p class="sectlede">Pressure now feeds back on itself. In the control, median pressure climbs for the whole run. With the rule it falls, then holds near 0.8–0.9. Cells above 3 SD of pressure at 72 h drop from 9.3% to 2.3%. The relief also loosens contact inhibition: the median division rate at 72 h is 5.6e‑4/min, against 2.4e‑4/min in the control.</p>
+  <div class="keyrow" aria-hidden="true"><span><i class="acc"></i>final model</span><span><i class="ctl dash"></i>control</span></div>
+  <div class="charts">
+    <figure class="chart"><figcaption>Median pressure <span>live cells · 1 = median at t = 0 tissue</span></figcaption><div class="plot" id="c-pressure"></div></figure>
+    <figure class="chart"><figcaption>Median apoptosis rate <span>× base rate · live cells</span></figcaption><div class="plot" id="c-apo"></div></figure>
+    <figure class="chart"><figcaption>Deaths started <span>per 3 h, all types</span></figcaption><div class="plot" id="c-deaths"></div></figure>
+    <figure class="chart"><figcaption>Contacts per cell <span>mean signalling contacts</span></figcaption><div class="plot" id="c-nb"></div></figure>
+  </div>
+  <div class="charts three">
+    <figure class="chart"><figcaption><i class="dot" style="background:var(--tumor)"></i>Tumour <span>live cells</span></figcaption><div class="plot" id="c-tumor"></div></figure>
+    <figure class="chart"><figcaption><i class="dot" style="background:var(--tcell)"></i>T cell <span>live cells</span></figcaption><div class="plot" id="c-tcell"></div></figure>
+    <figure class="chart"><figcaption><i class="dot" style="background:var(--macro)"></i>Macrophage <span>live cells</span></figcaption><div class="plot" id="c-macrophage"></div></figure>
+  </div>
+  <details class="data"><summary>Numbers behind these charts</summary><div class="scroll" id="datatable"></div></details>
+</section>
+
+<section id="checks">
+  <h2>Four things to check before calling it final</h2>
+  <p class="sectlede">The rule does what it was added to do. These four side effects come from the same numbers and are worth a decision.</p>
+
+  <div class="qa flag">
+    <h3>1 · The rule fires hard at t = 0</h3>
+    <p>Both runs start from the same tissue, which was packed and calibrated with no pressure-death rule. With the rule on, the median apoptosis rate is already <strong>2.4× base at t = 0</strong> (control 1.07×). The first 3 h see 180 death starts against 102. By 9 h, 511 cells are dying, and mean contacts per cell have dropped from 4.47 to 3.33. Contacts then stay at 3.0–3.3 for the rest of the run.</p>
+    <p>So the first ~12 h are the tissue relaxing to the density the new rule tolerates, not steady-state behaviour. If you compare gene states near t = 0, drop that window. Alternatively, start the rule after the warm-up or ramp it in.</p>
+  </div>
+
+  <div class="qa flag">
+    <h3>2 · Macrophages decline steadily</h3>
+    <p>Macrophages go <strong>1,000 → 651 live</strong>, against 1,148 in the control: 965 deaths and only 616 divisions. Their base division rate is 0, so a lost macrophage is replaced only when the proliferation rule fires. They are also the largest cells (10 µm radius), so they overlap more at the same packing. In the control they had the highest median pressure of any type (1.82, against 1.51 for tumour and 1.15 for T cells).</p>
+    <p>The new rule applies to every type (<code>cell_type "*"</code>). If crowding death is meant for tumour only, add <code>cell_type: tumor</code> to that row of <code>configs/rules_pressure_death.yaml</code>.</p>
+  </div>
+
+  <div class="qa flag">
+    <h3>3 · Density regulation, not a necrotic core</h3>
+    <p>Dying cells are spread evenly through the packed body of the tissue and fall off only at the rim. Density drops to 0.82–0.90 of the control in every band, so the tissue thins everywhere instead of hollowing out.</p>
+    <div class="scroll"><table class="num">
+      <tr><th>radial band</th><th>cells / 10⁴ µm²</th><th>control</th><th>median pressure</th><th>control</th><th>dying</th><th>control</th></tr>
+      <tr><td>0.0 – 0.2</td><td>50.8</td><td class="ctl">62.1</td><td>1.24</td><td class="ctl">2.24</td><td>14.1%</td><td class="ctl">6.1%</td></tr>
+      <tr><td>0.2 – 0.4</td><td>50.5</td><td class="ctl">59.5</td><td>1.25</td><td class="ctl">2.08</td><td>15.2%</td><td class="ctl">7.2%</td></tr>
+      <tr><td>0.4 – 0.6</td><td>43.1</td><td class="ctl">48.5</td><td>0.91</td><td class="ctl">1.30</td><td>16.3%</td><td class="ctl">10.4%</td></tr>
+      <tr><td>0.6 – 0.8</td><td>10.1</td><td class="ctl">11.2</td><td>0.06</td><td class="ctl">0.14</td><td>13.1%</td><td class="ctl">13.3%</td></tr>
+      <tr><td>0.8 – 1.0</td><td>1.5</td><td class="ctl">1.8</td><td>0.00</td><td class="ctl">0.00</td><td>10.4%</td><td class="ctl">9.6%</td></tr>
+    </table></div>
+    <p>Bands are fractions of the 99th-percentile radius at 72 h (1,021 µm final, 1,042 µm control). Pressure is flat inside the packed region and collapses at its edge. It encodes “inside the tissue” rather than “far from the surface”, so it cannot carve a dead centre. A necrotic core needs a signal like distance from the surface or a diffusing nutrient, which the plugin system can add next to <code>distance_from_centre</code>.</p>
+  </div>
+
+  <div class="qa flag">
+    <h3>4 · Fewer contacts, less signalling, stronger TF drift</h3>
+    <p>Signalling is by contact, so losing a quarter of the contacts lowers the ligand each cell receives. Per receiving cell at 72 h (plot 14d, read from the chart), T cells are down about 1.1 log2 and macrophages about 0.7. Tumour cells dip to about −0.45 and recover to roughly 0. In the control the same numbers were −0.35, +0.11 and +0.57.</p>
+    <p>The pathway TFs downstream of those receptors fall further than in the control:</p>
+    <div class="scroll"><table class="num">
+      <tr><th>TF · cell type</th><th>final, log2 at 72 h</th><th>control</th></tr>
+      <tr><td>NFKB1 · T cell</td><td>−0.62</td><td class="ctl">−0.36</td></tr>
+      <tr><td>STAT3 · T cell</td><td>−0.52</td><td class="ctl">−0.36</td></tr>
+      <tr><td>JUN · T cell</td><td>−0.45</td><td class="ctl">−0.20</td></tr>
+      <tr><td>NFKB1 · macrophage</td><td>−0.28</td><td class="ctl">−0.15</td></tr>
+      <tr><td>NFKB1 · tumour</td><td>−0.27</td><td class="ctl">−0.15</td></tr>
+      <tr><td>FOS · tumour</td><td>+0.02</td><td class="ctl">+0.17</td></tr>
+    </table></div>
+    <p>This is consistent with contact loss driving the gene layer. It is not a separate effect of the rule, since the rule acts only on apoptosis rate. Keep it in mind when reading TF or L–R plots from this run against the control.</p>
+  </div>
+</section>
+
+<section id="tissue">
+  <h2>What the tissue did</h2>
+  <p class="sectlede">Growth, sorting, movement and events. This behaviour emerges from the rules; none of it is set directly.</p>
+  <div class="grid">
+    <div class="card wide">
+      <button class="shot" data-cap="06 · spatial cell types"><img loading="lazy" src="plots/06_spatial_cell_types.png" alt="Six spatial snapshots of the tissue from 0 to 72 hours, coloured by cell type"></button>
+      <div class="cap"><h3><em>06</em> The tissue at six time points</h3>
+        <p>Cell positions at 0, 15, 30, 42, 57 and 72 h, coloured by type, with dying cells marked.</p>
+        <p class="read">Same outer radius as the control (779 vs 783 µm), with visibly looser packing throughout and no hollow centre.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="05a · emergent behaviour"><img loading="lazy" src="plots/05a_emergent_behaviour.png" alt="Eight panels: living cells, division rate, death rate, speed, segregation, infiltration, spread and MSD"></button>
+      <div class="cap"><h3><em>05a</em> Emergent behaviour</h3>
+        <p>Living cells, division and death rates, rule-set speed, self-sorting, infiltration, spread from centre and mean squared displacement.</p>
+        <p class="read">Macrophages fall steadily from 1,000 to about 650, and their death rate spikes in the first 6 h. Tumour self-contact climbs 0.36 → 0.78 (control 0.72). The share of T cells touching tumour falls 0.68 → 0.53. T cells spread furthest, to a median 575 µm from the centre.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="10 · division and death"><img loading="lazy" src="plots/10_division_death_events.png" alt="Maps of division and death locations coloured by time, and events per time bin"></button>
+      <div class="cap"><h3><em>10</em> Where cells divided and died</h3>
+        <p>8,850 divisions and 6,199 death starts, placed in space and coloured by time, with per-type counts per 3 h.</p>
+        <p class="read">Deaths cover the whole body of the tissue rather than the rim. Tumour deaths climb to about 260 per 3 h by the end, tracking tumour divisions.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="11 · pressure"><img loading="lazy" src="plots/11_pressure.png" alt="Pressure maps over time and pressure against division rate"></button>
+      <div class="cap"><h3><em>11</em> Mechanical pressure</h3>
+        <p>Relative pressure per cell, the signal that now drives both contact inhibition and crowding death.</p>
+        <p class="read">Median pressure at 72 h is 0.91, against 1.48 in the control.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="07a · cell tracks"><img loading="lazy" src="plots/07a_cell_tracks.png" alt="Trajectories of 40 tracked cells per type"></button>
+      <div class="cap"><h3><em>07a</em> Individual cell tracks</h3>
+        <p>Forty tracks per type, sampled every 6 min. The playback at the top shows every cell.</p></div>
+    </div>
+    <div class="card wide narrow">
+      <button class="shot" data-cap="05b · neighbourhood enrichment"><img loading="lazy" src="plots/05b_neighbourhood_enrichment.png" alt="Type-type contact enrichment z-scores at start and end"></button>
+      <div class="cap"><h3><em>05b</em> Who sits next to whom</h3>
+        <p>Contact enrichment between every pair of types, as a z-score against shuffled labels, at the start and end.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="genes">
+  <h2>Genes and signalling</h2>
+  <p class="sectlede">The gene layer underneath the behaviour: transcription factors, behaviour modules, GRN edge activity and ligand–receptor traffic on the curated network.</p>
+  <div class="grid">
+    <div class="card wide">
+      <button class="shot" data-cap="14d · L–R total vs per cell"><img loading="lazy" src="plots/14d_lr_per_cell.png" alt="Whole-tissue and per-cell ligand-receptor heatmaps and per-receiver signalling curves"></button>
+      <div class="cap"><h3><em>14d</em> L–R signalling with growth divided out</h3>
+        <p>Left: whole-tissue totals, as in 04d. Middle: the same pairs per cell. Right: signalling received per cell by receiver type, against the dashed growth curve.</p>
+        <p class="read">Per cell, every receiver type loses signal early. T cells end about 1.1 log2 down and macrophages about 0.7 down, while tumour cells recover to roughly baseline. APP→CD74 falls hardest.</p></div>
+    </div>
+    <div class="card">
+      <button class="shot" data-cap="14a · all TFs"><img loading="lazy" src="plots/14a_all_tfs_over_time.png" alt="All transcription factors over time in all three cell types"></button>
+      <div class="cap"><h3><em>14a</em> Every TF, all three types</h3>
+        <p>Mean log2 against each type’s own t = 0, on one shared row order and scale.</p>
+        <p class="read">Mostly downward drift. The largest moves are NFKB1, STAT3, JUN and ETS1 in T cells, the strongest at −0.62.</p></div>
+    </div>
+    <div class="card">
+      <button class="shot" data-cap="14c · GRN edge activity, all types"><img loading="lazy" src="plots/14c_grn_edge_activity_all_types.png" alt="GRN edge activity over time for the most dynamic edges in all three types"></button>
+      <div class="cap"><h3><em>14c</em> GRN edge activity, all types</h3>
+        <p>The 60 most dynamic edges, as change in edge input from t = 0, on a shared scale.</p></div>
+    </div>
+    <div class="card">
+      <button class="shot" data-cap="14b · all genes by role"><img loading="lazy" src="plots/14b_all_genes_by_role.png" alt="All 167 genes grouped by role over time"></button>
+      <div class="cap"><h3><em>14b</em> All 167 genes, by role</h3>
+        <p>TFs, ligands, receptors and module targets in one layout, per type.</p></div>
+    </div>
+    <div class="card">
+      <button class="shot" data-cap="08 · spatial gene expression"><img loading="lazy" src="plots/08_spatial_gene_expression.png" alt="Spatial maps of rule genes, spatially variable genes and module scores"></button>
+      <div class="cap"><h3><em>08</em> Genes in space</h3>
+        <p>Rule genes, spatially variable genes and module scores mapped onto positions at the start, middle and end.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="04d · L–R communication"><img loading="lazy" src="plots/04d_lr_communication_over_time.png" alt="Top ligand-receptor pairs over time and sender-receiver matrices"></button>
+      <div class="cap"><h3><em>04d</em> Ligand–receptor traffic, whole tissue</h3>
+        <p>The 20 busiest pairs over 72 h, with sender → receiver matrices at the start and end. These are totals, so they scale with cell number. Read 14d for per-cell values.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="04b · module scores"><img loading="lazy" src="plots/04b_module_scores_over_time.png" alt="Behaviour module scores over time by cell type"></button>
+      <div class="cap"><h3><em>04b</em> Behaviour modules</h3>
+        <p>Apoptosis, proliferation, migration, chemotaxis and necrosis scores per type (median and IQR). The rules turn these scores into division, death and speed.</p></div>
+    </div>
+    <div class="card">
+      <button class="shot" data-cap="04a · TF expression"><img loading="lazy" src="plots/04a_tf_expression_over_time.png" alt="The 30 most dynamic TFs per cell type over time"></button>
+      <div class="cap"><h3><em>04a</em> Most dynamic TFs per type</h3>
+        <p>The 30 most dynamic TFs in each type. Rows differ between panels; 14a keeps one order.</p></div>
+    </div>
+    <div class="card">
+      <button class="shot" data-cap="04c · GRN edge activity"><img loading="lazy" src="plots/04c_grn_edge_activity_over_time.png" alt="Most changing GRN edges per type over time"></button>
+      <div class="cap"><h3><em>04c</em> GRN edge activity per type</h3>
+        <p>The 30 most changing edges in each type: regulator activation × signed weight.</p></div>
+    </div>
+    <div class="card">
+      <button class="shot" data-cap="13 · behaviour drivers"><img loading="lazy" src="plots/13_behaviour_drivers.png" alt="Genes most associated with each behaviour"></button>
+      <div class="cap"><h3><em>13</em> What drives each behaviour</h3>
+        <p>Genes most associated with each behaviour. Red marks genes the rules actually read, so they should rank high.</p></div>
+    </div>
+    <div class="card">
+      <button class="shot" data-cap="12 · spatially variable genes"><img loading="lazy" src="plots/12_spatially_variable_genes.png" alt="Moran's I of the top 25 genes over time"></button>
+      <div class="cap"><h3><em>12</em> Spatially variable genes</h3>
+        <p>Moran’s I of the top 25 genes over time, a known spatial truth to test spatial methods against.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="states">
+  <h2>States and trajectories</h2>
+  <p class="sectlede">Standard single-cell views computed on data whose true time and lineage are known. Cell types are fixed in this model, so pseudotime tracks gradual state drift, not differentiation.</p>
+  <div class="grid">
+    <div class="card wide">
+      <button class="shot" data-cap="01 · UMAP"><img loading="lazy" src="plots/01_umap.png" alt="UMAP of the last snapshot and of all snapshots, by type and by time"></button>
+      <div class="cap"><h3><em>01</em> UMAP</h3><p>The last snapshot and all snapshots pooled, coloured by type and by time.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="03 · pseudotime"><img loading="lazy" src="plots/03_pseudotime.png" alt="Diffusion pseudotime per type against true time"></button>
+      <div class="cap"><h3><em>03</em> Pseudotime vs true time</h3><p>Diffusion pseudotime per type against the simulation clock.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="09a · emergent states"><img loading="lazy" src="plots/09a_emergent_states.png" alt="Leiden states within each type: share over time, behaviour, niche and markers"></button>
+      <div class="cap"><h3><em>09a</em> Emergent states</h3><p>Leiden states within each type, with their share over time, behaviour, niche and markers.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="09b · states in space"><img loading="lazy" src="plots/09b_states_in_space.png" alt="Emergent states mapped onto tissue positions"></button>
+      <div class="cap"><h3><em>09b</em> Those states in the tissue</h3><p>The 09a states mapped back onto position. This tests whether a state found in expression alone sits somewhere specific.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="velocity">
+  <h2>RNA velocity</h2>
+  <p class="sectlede">scVelo’s estimate from spliced and unspliced counts, checked against the true velocity the simulator recorded. Counts are sparse at capture 0.2, so expect only weak agreement.</p>
+  <div class="grid">
+    <div class="card">
+      <button class="shot" data-cap="02a · velocity stream, final"><img loading="lazy" src="plots/02a_velocity_stream_final.png" alt="Velocity streams at the final snapshot, estimated and true"></button>
+      <div class="cap"><h3><em>02a</em> Velocity stream, final snapshot</h3><p>Estimated and true velocity on the 72 h UMAP.</p></div>
+    </div>
+    <div class="card">
+      <button class="shot" data-cap="02a · velocity stream, pooled"><img loading="lazy" src="plots/02a_velocity_stream_pooled.png" alt="Velocity streams pooled across snapshots"></button>
+      <div class="cap"><h3><em>02a</em> Velocity stream, pooled</h3><p>The same, pooled across all 25 snapshots.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="02b · velocity accuracy, final"><img loading="lazy" src="plots/02b_velocity_accuracy_final.png" alt="Per-cell cosine and per-gene correlation of estimated vs true velocity at 72 h"></button>
+      <div class="cap"><h3><em>02b</em> Estimated vs true, final</h3><p>Per-cell cosine and per-gene correlation, and accuracy against mRNA half-life.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="02b · velocity accuracy, pooled"><img loading="lazy" src="plots/02b_velocity_accuracy_pooled.png" alt="Velocity accuracy pooled across snapshots"></button>
+      <div class="cap"><h3><em>02b</em> Estimated vs true, pooled</h3><p>The same check across all snapshots.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="02c · phase portraits, final"><img loading="lazy" src="plots/02c_phase_portraits_final.png" alt="Unspliced vs spliced phase portraits at 72 h"></button>
+      <div class="cap"><h3><em>02c</em> Phase portraits, final</h3><p>Unspliced against spliced for the most dynamic genes, with the true steady-state line and the scVelo fit.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="02c · phase portraits, pooled"><img loading="lazy" src="plots/02c_phase_portraits_pooled.png" alt="Phase portraits pooled across snapshots"></button>
+      <div class="cap"><h3><em>02c</em> Phase portraits, pooled</h3><p>Pooled across the run.</p></div>
+    </div>
+    <div class="card wide narrow">
+      <button class="shot" data-cap="03b · velocity pseudotime"><img loading="lazy" src="plots/03b_velocity_pseudotime.png" alt="Velocity pseudotime, estimated and true, against true time"></button>
+      <div class="cap"><h3><em>03b</em> Velocity pseudotime vs true time</h3><p>Pseudotime from the estimated and the true velocity field, against the simulation clock.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built from <code>/vast/djishnu/Palak/GRN_ABM/results/runs/main_72h_pressure_death/</code>. The control is <code>main_72h_curated</code>, identical except that it uses <code>configs/rules.yaml</code>. Network: <code>data/processed/network_curated</code>, with 167 genes, 69 TFs and 50 L–R pairs. The run took 338 s of simulation after a 20 s start-up. To reproduce it, from <code>/vast/djishnu/Palak/GRN_ABM</code>:</p>
+<pre>sbatch -J sim_pdeath scripts/run_py.sbatch scripts/08_run_simulation.py \
+  --engine configs/engine_curated.yaml --abm configs/abm.yaml \
+  --rules configs/rules_pressure_death.yaml --hours 72 --snapshot-min 180 \
+  --name main_72h_pressure_death
+RUN=results/runs/main_72h_pressure_death
+sbatch -J analysis  scripts/run_analysis.sbatch $RUN
+sbatch -J endpoints scripts/run_py.sbatch scripts/11_export_endpoints.py --run $RUN
+sbatch -J tfdyn     scripts/run_py.sbatch scripts/14_tf_dynamics.py --run $RUN</pre>
+</footer>
+</div>
+
+<dialog class="lb">
+  <img alt="">
+  <div class="lbcap"><span></span><button type="button">close ✕</button></div>
+</dialog>
+
+<script>
+/* ---------------- lightbox ---------------- */
+(function(){
+  var lb = document.querySelector('dialog.lb'), lbi = lb.querySelector('img'), lbc = lb.querySelector('.lbcap span');
+  document.querySelectorAll('button.shot').forEach(function(b){
+    b.addEventListener('click', function(){
+      var img = b.querySelector('img'); lbi.src = img.src; lbi.alt = img.alt;
+      lbc.textContent = b.dataset.cap || ''; if (lb.showModal) lb.showModal();
+    });
+  });
+  lb.querySelector('button').addEventListener('click', function(){ lb.close(); });
+  lb.addEventListener('click', function(e){ if (e.target === lb) lb.close(); });
+})();
+
+/* ---------------- theme tokens ---------------- */
+function tok(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+var themeListeners = [];
+function onTheme(fn){ themeListeners.push(fn); }
+(function(){
+  var fire = function(){ themeListeners.forEach(function(f){ f(); }); };
+  try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fire); } catch(e){}
+  new MutationObserver(fire).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme','class','style']});
+})();
+
+/* ---------------- chart data (from snapshots.h5ad / events.tsv of both runs) ---------------- */
+var D = {"pdeath":{"t":[0,3,6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,66,69,72],"p":[0.954,1.007,1.055,1.047,0.949,0.903,0.873,0.83,0.779,0.772,0.781,0.762,0.759,0.775,0.764,0.766,0.753,0.775,0.825,0.853,0.856,0.861,0.891,0.872,0.912],"apo":[2.418,2.812,3.054,2.999,2.707,2.711,2.642,2.835,2.687,2.577,2.612,2.56,2.666,2.755,2.696,2.662,2.716,2.77,2.952,2.864,3.092,3.046,2.914,2.849,2.984],"nb":[4.467,3.982,3.669,3.326,3.159,3.028,3.024,3.061,2.952,2.996,3.042,3.002,3.055,3.035,3.001,3.054,3.151,3.161,3.19,3.222,3.241,3.159,3.182,3.217,3.315],"live":{"tumor":[1000,1080,1132,1171,1206,1261,1337,1447,1481,1555,1661,1741,1868,2000,2097,2241,2385,2517,2664,2837,3013,3137,3269,3404,3608],"tcell":[1000,1011,1017,1020,1032,1035,1049,1050,1081,1101,1116,1134,1151,1147,1155,1172,1194,1229,1264,1279,1283,1317,1325,1367,1392],"macrophage":[1000,952,924,892,869,841,829,815,804,801,790,783,774,752,732,729,723,730,728,708,703,677,662,653,651]},"deaths3h":[180,176,189,205,221,194,223,225,210,221,228,230,266,250,248,261,281,299,294,350,380,365,349,354]},"control":{"t":[0,3,6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,66,69,72],"p":[0.954,1.029,1.08,1.158,1.085,1.084,1.081,1.005,1.066,1.11,1.045,1.127,1.096,1.121,1.183,1.183,1.209,1.247,1.263,1.259,1.326,1.375,1.414,1.436,1.478],"apo":[1.074,1.089,1.091,1.119,1.151,1.17,1.189,1.203,1.194,1.223,1.211,1.221,1.213,1.181,1.167,1.187,1.187,1.178,1.205,1.183,1.16,1.159,1.132,1.127,1.114],"nb":[4.467,4.252,4.087,3.97,3.838,3.847,3.89,3.904,3.933,3.969,3.897,3.939,3.949,4.014,4.045,4.039,4.041,4.127,4.182,4.175,4.251,4.279,4.309,4.366,4.426],"live":{"tumor":[1000,1089,1162,1247,1310,1417,1500,1619,1731,1851,1954,2050,2188,2322,2448,2606,2766,2888,3070,3234,3399,3627,3815,4018,4261],"tcell":[1000,1024,1056,1081,1122,1140,1186,1214,1258,1279,1308,1340,1395,1426,1465,1492,1525,1571,1623,1656,1708,1721,1753,1775,1816],"macrophage":[1000,1012,1027,1030,1035,1034,1041,1046,1063,1077,1086,1089,1109,1115,1126,1118,1126,1121,1125,1128,1144,1136,1127,1137,1148]},"deaths3h":[102,113,115,143,118,114,125,132,169,173,190,157,174,205,240,203,205,227,231,235,269,256,263,263]}};
+var BINS = []; for (var b = 0; b < 24; b++) BINS.push(b*3 + 1.5);
+
+/* ---------------- line chart (SVG, crosshair + tooltip) ---------------- */
+var SVGNS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent){ var e = document.createElementNS(SVGNS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+function niceTicks(lo, hi, n){
+  var span = hi - lo || 1, raw = span / n, mag = Math.pow(10, Math.floor(Math.log10(raw))), r = raw / mag;
+  var step = (r < 1.5 ? 1 : r < 3 ? 2 : r < 7 ? 5 : 10) * mag, out = [];
+  for (var v = Math.ceil(lo/step)*step; v <= hi + 1e-9; v += step) out.push(+v.toFixed(10));
+  return out;
+}
+function lineChart(host, cfg){
+  function draw(){
+    host.innerHTML = '';
+    var W = host.clientWidth, H = host.clientHeight; if (!W) return;
+    var m = {l:44, r:cfg.labels === false ? 12 : 70, t:10, b:26};
+    var all = []; cfg.series.forEach(function(s){ all = all.concat(s.values); });
+    var ymin = cfg.yMin != null ? cfg.yMin : Math.min.apply(null, all), ymax = Math.max.apply(null, all);
+    var pad = (ymax - ymin) * 0.08 || 1; if (cfg.yMin == null) ymin -= pad; ymax += pad;
+    var yt = niceTicks(ymin, ymax, 4); ymin = Math.min(ymin, yt[0]); ymax = Math.max(ymax, yt[yt.length-1]);
+    var xs = cfg.x, x0 = 0, x1 = 72;
+    var X = function(v){ return m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r); };
+    var Y = function(v){ return m.t + (1 - (v - ymin) / (ymax - ymin)) * (H - m.t - m.b); };
+    var svg = el('svg', {viewBox:'0 0 '+W+' '+H, role:'img', 'aria-label':cfg.aria}, host);
+    var line = tok('--line'), ink2 = tok('--ink-2'), surf = tok('--surface');
+    yt.forEach(function(v){
+      el('line', {x1:m.l, x2:W-m.r, y1:Y(v), y2:Y(v), stroke:line, 'stroke-width':1}, svg);
+      var t = el('text', {x:m.l-6, y:Y(v)+4, 'text-anchor':'end'}, svg); t.textContent = cfg.fmt ? cfg.fmt(v) : v;
+    });
+    [0,12,24,36,48,60,72].forEach(function(v){
+      var t = el('text', {x:X(v), y:H-8, 'text-anchor':'middle'}, svg); t.textContent = v + (v === 72 ? ' h' : '');
+    });
+    var ends = [];
+    cfg.series.forEach(function(s){
+      var col = tok(s.color), d = '';
+      s.values.forEach(function(v, i){ d += (i ? 'L' : 'M') + X(xs[i]).toFixed(1) + ',' + Y(v).toFixed(1); });
+      el('path', {d:d, fill:'none', stroke:col, 'stroke-width':2, 'stroke-linejoin':'round', 'stroke-linecap':'round', 'stroke-dasharray':s.dash ? '5 4' : 'none'}, svg);
+      var li = s.values.length - 1;
+      el('circle', {cx:X(xs[li]), cy:Y(s.values[li]), r:3.5, fill:col, stroke:surf, 'stroke-width':2}, svg);
+      ends.push({y:Y(s.values[li]), name:s.name, x:X(xs[li])});
+    });
+    if (cfg.labels !== false){
+      ends.sort(function(a,b){ return a.y - b.y; });
+      for (var i = 1; i < ends.length; i++) if (ends[i].y - ends[i-1].y < 14) ends[i].y = ends[i-1].y + 14;
+      ends.forEach(function(e){ var t = el('text', {x:e.x+8, y:e.y+4, 'class':'lbl'}, svg); t.textContent = e.name; });
+    }
+    var cross = el('line', {y1:m.t, y2:H-m.b, stroke:tok('--line-strong'), 'stroke-width':1, visibility:'hidden'}, svg);
+    var dots = cfg.series.map(function(s){ return el('circle', {r:4, fill:tok(s.color), stroke:surf, 'stroke-width':2, visibility:'hidden'}, svg); });
+    var hit = el('rect', {x:m.l, y:0, width:W-m.l-m.r, height:H, fill:'transparent'}, svg);
+    var tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true; host.appendChild(tip);
+    function move(ev){
+      var r = svg.getBoundingClientRect(), px = ev.clientX - r.left, best = 0, bd = 1e9;
+      xs.forEach(function(v, i){ var dd = Math.abs(X(v) - px); if (dd < bd){ bd = dd; best = i; } });
+      var cx = X(xs[best]); cross.setAttribute('x1', cx); cross.setAttribute('x2', cx); cross.setAttribute('visibility', 'visible');
+      var html = '<div class="tt">' + (cfg.xLabel ? cfg.xLabel(xs[best]) : 't = ' + xs[best] + ' h') + '</div>';
+      cfg.series.forEach(function(s, k){
+        dots[k].setAttribute('cx', cx); dots[k].setAttribute('cy', Y(s.values[best])); dots[k].setAttribute('visibility', 'visible');
+        html += '<div class="row"><i class="' + (s.dash ? 'dash' : '') + '" style="border-color:' + tok(s.color) + '"></i>' + s.name + ' <b>' + (cfg.tipFmt || cfg.fmt || String)(s.values[best]) + '</b></div>';
+      });
+      tip.innerHTML = html; tip.hidden = false;
+      var tw = tip.offsetWidth, left = cx + 12; if (left + tw > W) left = cx - tw - 12;
+      tip.style.left = Math.max(0, left) + 'px'; tip.style.top = '4px';
+    }
+    function leave(){ tip.hidden = true; cross.setAttribute('visibility', 'hidden'); dots.forEach(function(d){ d.setAttribute('visibility', 'hidden'); }); }
+    hit.addEventListener('pointermove', move); hit.addEventListener('pointerdown', move); hit.addEventListener('pointerleave', leave);
+  }
+  draw();
+  new ResizeObserver(function(){ draw(); }).observe(host);
+  onTheme(draw);
+}
+var f2 = function(v){ return (+v).toFixed(2); }, f1x = function(v){ return (+v).toFixed(1) + '×'; }, f0 = function(v){ return Math.round(v).toLocaleString('en-US'); };
+var fk = function(v){ return v >= 1000 ? (v/1000).toFixed(v % 1000 ? 1 : 0) + 'k' : String(v); };
+function pair(key, fmt, aria, extra){
+  var c = Object.assign({x:D.pdeath.t, fmt:fmt, aria:aria, series:[
+    {name:'final', values:D.pdeath[key], color:'--accent'},
+    {name:'control', values:D.control[key], color:'--control', dash:true}]}, extra || {});
+  return c;
+}
+lineChart(document.getElementById('c-pressure'), pair('p', f2, 'Median pressure over time: final model falls to about 0.76 then holds near 0.9; control rises to 1.48'));
+lineChart(document.getElementById('c-apo'), pair('apo', f1x, 'Median apoptosis rate relative to base: final model about 2.4 to 3.1 times; control about 1.1 times', {yMin:0}));
+lineChart(document.getElementById('c-nb'), pair('nb', f2, 'Mean contacts per cell: final model drops from 4.47 to about 3.0 within 15 hours; control stays near 4'));
+lineChart(document.getElementById('c-deaths'), {x:BINS, fmt:f0, yMin:0, aria:'Deaths started per 3 hours: final model 176 to 380; control 102 to 269',
+  xLabel:function(v){ return (v-1.5) + '–' + (v+1.5) + ' h'; },
+  series:[{name:'final', values:D.pdeath.deaths3h, color:'--accent'},{name:'control', values:D.control.deaths3h, color:'--control', dash:true}]});
+[['tumor','--tumor'],['tcell','--tcell'],['macrophage','--macro']].forEach(function(p){
+  lineChart(document.getElementById('c-' + p[0]), {x:D.pdeath.t, fmt:fk, tipFmt:f0, yMin:0, aria:'Live ' + p[0] + ' cells over time, final model vs control',
+    series:[{name:'final', values:D.pdeath.live[p[0]], color:p[1]},{name:'control', values:D.control.live[p[0]], color:p[1], dash:true}]});
+});
+(function(){
+  var rows = '<table class="num"><tr><th>t (h)</th><th>pressure</th><th>ctl</th><th>apoptosis ×</th><th>ctl</th><th>contacts</th><th>ctl</th><th>tumour</th><th>ctl</th><th>T cell</th><th>ctl</th><th>macro</th><th>ctl</th></tr>';
+  for (var i = 0; i < 25; i += 2){
+    var a = D.pdeath, c = D.control;
+    rows += '<tr><td>' + a.t[i] + '</td><td>' + f2(a.p[i]) + '</td><td class="ctl">' + f2(c.p[i]) + '</td><td>' + f2(a.apo[i]) + '</td><td class="ctl">' + f2(c.apo[i]) +
+      '</td><td>' + f2(a.nb[i]) + '</td><td class="ctl">' + f2(c.nb[i]) + '</td>';
+    ['tumor','tcell','macrophage'].forEach(function(k){ rows += '<td>' + f0(a.live[k][i]) + '</td><td class="ctl">' + f0(c.live[k][i]) + '</td>'; });
+    rows += '</tr>';
+  }
+  document.getElementById('datatable').innerHTML = rows + '</table>';
+})();
+
+/* ---------------- tissue playback ---------------- */
+(function(){
+  var RAD = [8.41, 5.0, 10.0], DOMAIN_R = 1399, VIEW = {tissue:1080, domain:1430};
+  var state = {T:72, playing:false, speed:4, mode:'type', view:'tissue', last:0};
+  var runs = {}, panes = {};
+  document.querySelectorAll('.pane').forEach(function(p){
+    var key = p.dataset.run;
+    panes[key] = {el:p, canvas:p.querySelector('canvas'), msg:p.querySelector('.msg'), vals:p.querySelectorAll('.counts .v'), shownFrame:-1};
+  });
+  var playBtn = document.getElementById('play'), scrub = document.getElementById('scrub'), tbox = document.getElementById('tbox');
+
+  async function load(key){
+    var meta = await (await fetch('sim/' + key + '.json')).json();
+    // gzip'd binary, stored as base64 text (the host serves text, not .gz)
+    var b64 = (await (await fetch('sim/' + key + '.gz.b64.txt')).text()).trim();
+    var bin = atob(b64), gz = new Uint8Array(bin.length);
+    for (var q = 0; q < bin.length; q++) gz[q] = bin.charCodeAt(q);
+    if (typeof DecompressionStream === 'undefined') throw new Error('This browser cannot unpack the track data. Try a current Chrome, Firefox or Safari.');
+    var buf = await new Response(new Blob([gz]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+    var N = meta.N, off = meta.off, F = off.length - 1;
+    var id = new Uint16Array(buf, 0, N), x = new Int16Array(buf, 2*N, N), y = new Int16Array(buf, 4*N, N), fl = new Uint8Array(buf, 6*N, N);
+    var nxt = new Int32Array(N).fill(-1), counts = [];
+    for (var f = 0; f < F; f++){
+      var c = [0,0,0,0];
+      for (var i = off[f]; i < off[f+1]; i++){ if (fl[i] & 4) c[3]++; else c[fl[i] & 3]++; }
+      counts.push(c);
+      if (f + 1 < F){
+        var j = off[f+1], je = off[f+2];
+        for (i = off[f]; i < off[f+1]; i++){
+          while (j < je && id[j] < id[i]) j++;
+          if (j < je && id[j] === id[i]) nxt[i] = j;
+        }
+      }
+    }
+    return {meta:meta, off:off, F:F, x:x, y:y, fl:fl, nxt:nxt, counts:counts, step:meta.times_h[1] - meta.times_h[0]};
+  }
+
+  var colors = {};
+  function readColors(){
+    colors = {type:[tok('--tumor'), tok('--tcell'), tok('--macro')], dying:tok('--dying'), death:tok('--death'),
+      faint:tok('--line-strong'), surface:tok('--surface'), line:tok('--line'), muted:tok('--muted'), ink:tok('--ink-2')};
+  }
+  readColors();
+
+  function sizeCanvas(p){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2), w = p.canvas.clientWidth;
+    if (!w) return;
+    var px = Math.round(w * dpr);
+    if (p.canvas.width !== px){ p.canvas.width = px; p.canvas.height = px; }
+  }
+
+  function render(key){
+    var p = panes[key], R = runs[key]; if (!R) return;
+    sizeCanvas(p);
+    var cv = p.canvas, ctx = cv.getContext('2d'), S = cv.width, ext = VIEW[state.view], sc = S / (2 * ext), cx = S/2, cy = S/2;
+    ctx.fillStyle = colors.surface; ctx.fillRect(0, 0, S, S);
+    // domain boundary
+    ctx.setLineDash([S/150, S/150]); ctx.strokeStyle = colors.line; ctx.lineWidth = Math.max(1, S/600);
+    ctx.beginPath(); ctx.arc(cx, cy, DOMAIN_R * sc, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+    var fpos = state.T / R.step, f = Math.min(Math.floor(fpos), R.F - 1), a = Math.min(Math.max(fpos - f, 0), 1);
+    if (f >= R.F - 1){ f = R.F - 1; a = 0; }
+    var o0 = R.off[f], o1 = R.off[f+1], x = R.x, y = R.y, fl = R.fl, nxt = R.nxt;
+    var minr = Math.max(0.8, S/900);
+    function pass(test, color){
+      ctx.fillStyle = color; ctx.beginPath();
+      for (var i = o0; i < o1; i++){
+        var g = fl[i]; if (!test(g)) continue;
+        var j = nxt[i], px = x[i], py = y[i];
+        if (a > 0 && j >= 0){ px += (x[j] - px) * a; py += (y[j] - py) * a; }
+        var sx = cx + px * sc, sy = cy - py * sc, r = Math.max(RAD[g & 3] * sc, minr);
+        if (sx < -r || sy < -r || sx > S + r || sy > S + r) continue;
+        ctx.moveTo(sx + r, sy); ctx.arc(sx, sy, r, 0, 6.2832);
+      }
+      ctx.fill();
+    }
+    if (state.mode === 'type'){
+      pass(function(g){ return g & 4; }, colors.dying);
+      for (var t = 0; t < 3; t++) (function(t){ pass(function(g){ return !(g & 4) && (g & 3) === t; }, colors.type[t]); })(t);
+    } else {
+      pass(function(g){ return !(g & 4); }, colors.faint);
+      minr = Math.max(1.6, S/420);
+      pass(function(g){ return g & 4; }, colors.death);
+    }
+    // scale bar: 200 µm
+    var bw = 200 * sc, bx = S * 0.04, by = S * 0.955;
+    ctx.fillStyle = colors.ink; ctx.fillRect(bx, by, bw, Math.max(2, S/300));
+    ctx.font = Math.round(S/42) + 'px "IBM Plex Mono", ui-monospace, monospace'; ctx.fillStyle = colors.muted;
+    ctx.fillText('200 µm', bx, by - S/90);
+    var fr = Math.round(fpos); if (fr > R.F - 1) fr = R.F - 1;
+    if (fr !== p.shownFrame){
+      p.shownFrame = fr; var c = R.counts[fr];
+      for (var k = 0; k < 4; k++) p.vals[k].textContent = c[k].toLocaleString('en-US');
+    }
+  }
+  function renderAll(){
+    tbox.innerHTML = 't = <b>' + state.T.toFixed(1) + '</b> <span>h</span>';
+    Object.keys(runs).forEach(render);
+  }
+  function tick(now){
+    if (!state.playing) return;
+    var dt = (now - state.last) / 1000; state.last = now;
+    state.T = Math.min(72, state.T + dt * state.speed);
+    scrub.value = state.T;
+    renderAll();
+    if (state.T >= 72){ setPlaying(false); return; }
+    requestAnimationFrame(tick);
+  }
+  function setPlaying(on){
+    state.playing = on; playBtn.textContent = on ? 'Pause' : (state.T >= 72 ? 'Replay' : 'Play');
+    if (on){ if (state.T >= 72) state.T = 0; state.last = performance.now(); requestAnimationFrame(tick); }
+  }
+  playBtn.addEventListener('click', function(){ setPlaying(!state.playing); });
+  scrub.addEventListener('input', function(){ state.T = +scrub.value; if (state.playing) setPlaying(false); playBtn.textContent = state.T >= 72 ? 'Replay' : 'Play'; renderAll(); });
+  document.getElementById('speed').addEventListener('change', function(e){ state.speed = +e.target.value; });
+  function seg(a, b, set){
+    a.addEventListener('click', function(){ a.setAttribute('aria-pressed','true'); b.setAttribute('aria-pressed','false'); set(0); renderAll(); });
+    b.addEventListener('click', function(){ b.setAttribute('aria-pressed','true'); a.setAttribute('aria-pressed','false'); set(1); renderAll(); });
+  }
+  seg(document.getElementById('m-type'), document.getElementById('m-death'), function(i){ state.mode = i ? 'death' : 'type'; });
+  seg(document.getElementById('v-tissue'), document.getElementById('v-domain'), function(i){ state.view = i ? 'domain' : 'tissue'; });
+  onTheme(function(){ readColors(); renderAll(); });
+  new ResizeObserver(function(){ renderAll(); }).observe(document.querySelector('.panes'));
+
+  Promise.all(['pdeath','control'].map(function(key){
+    return load(key).then(function(R){ runs[key] = R; panes[key].msg.hidden = true; render(key); })
+      .catch(function(err){ panes[key].msg.textContent = 'Could not load the track data. ' + (err && err.message ? err.message : ''); throw err; });
+  })).then(function(){ playBtn.disabled = false; scrub.disabled = false; playBtn.textContent = 'Replay'; renderAll(); })
+    .catch(function(){});
+})();
+</script>

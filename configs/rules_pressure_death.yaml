@@ -1,0 +1,53 @@
+# Behaviour rules -- VARIANT of rules.yaml with one added rule: pressure -> apoptosis_rate.
+# Everything else is identical. See the block marked 'a crowded core dies' below.
+#
+# Behaviour rules (PhysiCell signal -> behaviour grammar). One row per rule; add, remove or switch off
+# (enabled: false) rows freely. Rows are checked when loaded, so a typo fails with a readable message.
+#
+# cell_type   "*" (default), one type from engine.yaml, or a list [tumor, tcell]
+# signal      a module from network.yaml (score = mean log2 change of pro genes minus anti genes), or any
+#             network gene; both in BASELINE SDs ((value - type mean) / type SD after the burn-in,
+#             so 2 = unusually high for that cell type)
+#             pressure (1 = as crowded as the starting tissue's median) | neighbours (number of contacts)
+#             | contact_<type> (contacts with that type) | anything a plugin registers
+# behaviour   any tissue parameter from abm.yaml `defaults:` (division_rate, apoptosis_rate: per min;
+#             speed: um/min; adhesion, repulsion, persistence_min, radius, ...)
+#             | gene:<GENE> (log change of its transcription on-rate)
+#             | chemotaxis:<LIGAND> (0-1: how strongly the cell climbs that ligand's gradient, estimated
+#               from nearby cells' current expression) | anything a plugin registers
+# direction   increases (give max) | decreases (give min); may be left out, it follows from max / min
+# response    H = s^n / (s^n + half_max^n) with s = max(signal, 0); n = hill_power (default 2)
+# combining   value = (1 - D) [(1 - U) base + U max] + D min, U / D = 1 - prod(1 - H) over the up / down
+#             rules of that behaviour; base = the cell type's value in abm.yaml (0 for gene: / chemotaxis:)
+
+chemotaxis_radius_um: 40        # cells within this distance are used to estimate a ligand gradient
+plugins: []                     # e.g. [plugins/examples.py] for distance_from_centre, dying_neighbours, module:<M>
+
+rules:
+  # gene programmes -> behaviour
+  - {signal: apoptosis,     behaviour: apoptosis_rate, direction: increases, max: 5.0e-3, half_max: 3.0, hill_power: 4}
+  - {signal: necrosis,      behaviour: apoptosis_rate, direction: increases, max: 2.0e-3, half_max: 3.0, hill_power: 4}
+  - {signal: proliferation, behaviour: division_rate,  direction: increases, max: 3.0e-3, half_max: 2.0}
+  - {signal: migration,     behaviour: speed,          direction: increases, max: 2.0,    half_max: 2.0}
+
+  # mechanics -> behaviour: contact inhibition
+  - {signal: pressure,      behaviour: division_rate,  direction: decreases, min: 0.0,    half_max: 1.5, hill_power: 4}
+
+  # mechanics -> behaviour: a crowded core dies (the rule missing from rules.yaml). Pressure is the only
+  # signal that routinely reaches extreme values (~9% of cells past 3 baseline SD at 72 h), so without
+  # this it suppresses division and nothing else -- the core stops growing but never goes necrotic.
+  # max matches the necrosis module's rule; half_max 3.0 keeps the threshold where the other death rules sit.
+  - {signal: pressure,      behaviour: apoptosis_rate, direction: increases, max: 2.0e-3, half_max: 3.0, hill_power: 4}
+
+  # behaviour -> genes: migrating cells raise their chemokine-receptor transcription
+  - {signal: migration,     behaviour: "gene:CXCR4",   direction: increases, max: 1.5,    half_max: 2.0}
+  - {signal: migration,     behaviour: "gene:CCR7",    direction: increases, max: 1.5,    half_max: 2.0}
+
+  # density -> ligand expression: crowded cells secrete more CXCL12
+  - {signal: neighbours,    behaviour: "gene:CXCL12",  direction: increases, max: 1.0,    half_max: 6.0, hill_power: 4}
+
+  # genes -> movement: T cells with high CXCR4 climb the CXCL12 gradient (which moves as cells move and express)
+  - {cell_type: tcell, signal: CXCR4, behaviour: "chemotaxis:CXCL12", direction: increases, max: 0.8, half_max: 1.0}
+
+  # example of a switched-off rule (tumour cells touching macrophages loosen their adhesion):
+  - {enabled: false, cell_type: [tumor], signal: contact_macrophage, behaviour: adhesion, direction: decreases, min: 0.1, half_max: 2.0}

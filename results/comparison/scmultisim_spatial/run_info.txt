@@ -1,0 +1,4 @@
+mode: spatial
+cells: 3000
+seconds: 812.0
+scale_k: 2.5398

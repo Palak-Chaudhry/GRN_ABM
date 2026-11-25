@@ -1,0 +1,551 @@
+<title>Tumour Microenvironment Run 72h</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+:root{
+  --bg:#F2F5F6; --surface:#FFFFFF; --surface-2:#E9EEF0;
+  --ink:#101619; --ink-2:#44555F; --muted:#6B7F8A;
+  --line:#D6DFE3; --line-strong:#B8C6CC;
+  --accent:#0C6E7F; --accent-soft:#E0F0F3;
+  --tumor:#1F77B4; --tcell:#D96B0C; --macro:#2CA02C;
+  --warn:#B4532A;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --maxw:1140px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B1113; --surface:#141C20; --surface-2:#1B262B;
+    --ink:#E7EFF2; --ink-2:#AFC2CA; --muted:#7D939D;
+    --line:#243137; --line-strong:#33454D;
+    --accent:#4FC3D4; --accent-soft:#11313A;
+    --tumor:#4E9FD8; --tcell:#F0962F; --macro:#55BE55;
+    --warn:#E08A5F;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B1113; --surface:#141C20; --surface-2:#1B262B;
+  --ink:#E7EFF2; --ink-2:#AFC2CA; --muted:#7D939D;
+  --line:#243137; --line-strong:#33454D;
+  --accent:#4FC3D4; --accent-soft:#11313A;
+  --tumor:#4E9FD8; --tcell:#F0962F; --macro:#55BE55;
+  --warn:#E08A5F;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--sans); font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+
+/* ---------- masthead ---------- */
+header.top{
+  border-bottom:1px solid var(--line); background:var(--surface);
+  position:sticky; top:0; z-index:50;
+}
+.top .wrap{display:flex; align-items:center; gap:18px; justify-content:space-between; min-height:54px}
+.runid{font-family:var(--mono); font-size:12.5px; color:var(--muted); letter-spacing:.01em}
+.runid b{color:var(--ink); font-weight:600}
+.legend{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+.lg{display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:11.5px; color:var(--ink-2)}
+.dot{width:9px; height:9px; border-radius:50%; flex:none}
+
+/* ---------- hero ---------- */
+.hero{padding:44px 0 30px}
+.eyebrow{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--accent); margin:0 0 14px;
+}
+h1{
+  font-size:clamp(30px,4.4vw,46px); line-height:1.08; margin:0 0 16px;
+  font-weight:600; letter-spacing:-.022em; text-wrap:balance; max-width:20ch;
+}
+.standfirst{
+  font-family:var(--serif); font-size:19px; line-height:1.52; color:var(--ink-2);
+  max-width:64ch; margin:0;
+}
+
+/* ---------- film ---------- */
+figure.film{margin:30px 0 0; background:var(--surface); border:1px solid var(--line)}
+figure.film img{display:block; width:100%; height:auto; background:#fff}
+.filmbar{
+  display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap;
+  padding:11px 16px; border-top:1px solid var(--line);
+  font-family:var(--mono); font-size:11.5px; color:var(--muted);
+}
+
+/* ---------- endpoints ---------- */
+section{padding:46px 0; border-top:1px solid var(--line)}
+h2{
+  font-size:13px; font-family:var(--mono); font-weight:600; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--accent); margin:0 0 8px;
+}
+.sectlede{font-family:var(--serif); font-size:17.5px; color:var(--ink-2); max-width:66ch; margin:0 0 28px}
+
+.endpoints{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
+.ep{background:var(--surface); padding:18px 20px}
+.ep .k{font-family:var(--mono); font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); margin-bottom:10px}
+.ep .pair{display:flex; align-items:baseline; gap:10px; font-variant-numeric:tabular-nums}
+.ep .a{font-family:var(--mono); font-size:15px; color:var(--muted)}
+.ep .arrow{color:var(--line-strong); font-size:13px}
+.ep .b{font-family:var(--mono); font-size:26px; font-weight:600; color:var(--ink); letter-spacing:-.02em}
+.ep .note{font-size:13px; color:var(--muted); margin-top:7px; line-height:1.4}
+.ep.tumor .b{color:var(--tumor)} .ep.tcell .b{color:var(--tcell)} .ep.macro .b{color:var(--macro)}
+
+/* ---------- file manifest ---------- */
+.files{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:8px}
+.file{background:var(--surface); padding:13px 18px; display:flex; gap:16px; align-items:baseline; flex-wrap:wrap}
+.file code{font-family:var(--mono); font-size:13px; color:var(--ink); font-weight:500}
+.file span{font-size:13.5px; color:var(--muted)}
+
+/* ---------- figure grid ---------- */
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); gap:20px}
+.card{background:var(--surface); border:1px solid var(--line); display:flex; flex-direction:column}
+.card.wide{grid-column:1/-1}
+.card button.shot{
+  display:block; width:100%; padding:0; border:0; background:var(--surface-2);
+  cursor:zoom-in; line-height:0; border-bottom:1px solid var(--line);
+}
+.card button.shot:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+.card img{width:100%; height:auto; display:block}
+.cap{padding:14px 17px 16px}
+.cap h3{
+  margin:0 0 6px; font-size:14.5px; font-weight:600; letter-spacing:-.005em;
+  display:flex; gap:9px; align-items:baseline;
+}
+.cap h3 em{font-family:var(--mono); font-style:normal; font-size:11.5px; color:var(--muted); font-weight:500; flex:none}
+.cap p{margin:0; font-size:14px; color:var(--ink-2); line-height:1.48}
+.cap p + p{margin-top:7px}
+.read{color:var(--ink); border-left:2px solid var(--accent); padding-left:10px; margin-top:9px !important; font-size:13.5px}
+.qa{background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--warn); padding:20px 24px; margin-bottom:22px}
+.qa h3{margin:0 0 10px; font-size:17px; font-weight:600; letter-spacing:-.012em}
+.qa p{margin:0 0 10px; font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink-2); max-width:70ch}
+.qa p:last-child{margin-bottom:0}
+.qa strong{color:var(--ink); font-weight:600}
+.qa code{font-family:var(--mono); font-size:13.5px; color:var(--ink)}
+.num{width:100%; border-collapse:collapse; margin:14px 0 4px; font-variant-numeric:tabular-nums}
+.num th,.num td{text-align:right; padding:7px 12px; border-bottom:1px solid var(--line); font-size:13.5px}
+.num th{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); font-weight:500}
+.num td:first-child,.num th:first-child{text-align:left; font-family:var(--mono); font-size:12.5px}
+.num tr:last-child td{border-bottom:0}
+.scroll{overflow-x:auto}
+
+/* ---------- lightbox ---------- */
+dialog.lb{border:0; padding:0; background:transparent; max-width:96vw; max-height:96vh}
+dialog.lb::backdrop{background:rgba(5,10,12,.88)}
+dialog.lb img{max-width:96vw; max-height:88vh; width:auto; height:auto; display:block; background:#fff; border:1px solid var(--line-strong)}
+dialog.lb .lbcap{
+  font-family:var(--mono); font-size:12px; color:#C9D7DD; padding:10px 2px 0; display:flex;
+  justify-content:space-between; gap:20px;
+}
+dialog.lb button{
+  background:none; border:0; color:#C9D7DD; font-family:var(--mono); font-size:12px;
+  cursor:pointer; text-decoration:underline; padding:0;
+}
+
+footer{padding:34px 0 60px; border-top:1px solid var(--line); color:var(--muted); font-size:13.5px}
+footer code{font-family:var(--mono); font-size:12.5px; color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+</style>
+
+<header class="top"><div class="wrap">
+  <div class="runid">run <b>main_72h_curated</b> · 72 h · 25 snapshots · network_curated</div>
+  <div class="legend">
+    <span class="lg"><i class="dot" style="background:var(--tumor)"></i>tumor</span>
+    <span class="lg"><i class="dot" style="background:var(--tcell)"></i>tcell</span>
+    <span class="lg"><i class="dot" style="background:var(--macro)"></i>macrophage</span>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+<div class="hero">
+  <p class="eyebrow">Agent-based simulation · curated L–R network</p>
+  <h1>3,000 cells, 72 hours of tissue</h1>
+  <p class="standfirst">A tumour, T-cell and macrophage population seeded at 1,000 each, stepped for 72 simulated hours on the curated signalling network. Cells divide, die, push on each other and read their neighbours’ ligands; every gene in all 167 is tracked per cell, in real time. This is the whole run — the film, the endpoints, and all 24 figures.</p>
+
+  <figure class="film">
+    <img src="movement.gif" alt="Animation of 3,000 cells growing to 7,970 over 72 simulated hours, coloured by cell type">
+    <div class="filmbar">
+      <span>movement.gif · 25 snapshots · 0 → 72 h</span>
+      <span>3,000 → 7,970 cells · disc radius 470 → 782 µm</span>
+    </div>
+  </figure>
+</div>
+
+<section>
+  <h2>Endpoints</h2>
+  <p class="sectlede">Saved as two standalone AnnData files. Each carries the full state: observed counts in <code>X</code>, the <code>S_true</code> / <code>U_true</code> / <code>spliced</code> / <code>unspliced</code> layers, coordinates in <code>obsm['spatial']</code>, and 28 columns of per-cell metadata.</p>
+
+  <div class="endpoints">
+    <div class="ep"><div class="k">All cells</div>
+      <div class="pair"><span class="a">3,000</span><span class="arrow">→</span><span class="b">7,970</span></div>
+      <div class="note">745 of the final cells are mid-apoptosis</div></div>
+    <div class="ep tumor"><div class="k">Tumor</div>
+      <div class="pair"><span class="a">1,000</span><span class="arrow">→</span><span class="b">4,749</span></div>
+      <div class="note">5,975 divisions — fastest cycling type</div></div>
+    <div class="ep tcell"><div class="k">T cell</div>
+      <div class="pair"><span class="a">1,000</span><span class="arrow">→</span><span class="b">1,999</span></div>
+      <div class="note">1,978 divisions; motile at 2 µm/min</div></div>
+    <div class="ep macro"><div class="k">Macrophage</div>
+      <div class="pair"><span class="a">1,000</span><span class="arrow">→</span><span class="b">1,222</span></div>
+      <div class="note">694 divisions, all rule-driven — its base rate is 0</div></div>
+    <div class="ep"><div class="k">Mean counts / cell</div>
+      <div class="pair"><span class="a">60.7</span><span class="arrow">→</span><span class="b">79.4</span></div>
+      <div class="note">observed, after Poisson capture at 0.2</div></div>
+    <div class="ep"><div class="k">Tissue radius</div>
+      <div class="pair"><span class="a">470</span><span class="arrow">→</span><span class="b">782 µm</span></div>
+      <div class="note">95th percentile from centre</div></div>
+    <div class="ep"><div class="k">Neighbours / cell</div>
+      <div class="pair"><span class="a">4.47</span><span class="arrow">→</span><span class="b">4.43</span></div>
+      <div class="note">packing holds as the tissue grows</div></div>
+    <div class="ep"><div class="k">Events</div>
+      <div class="pair"><span class="b">8,647</span><span class="arrow">/</span><span class="a">4,422</span></div>
+      <div class="note">divisions / deaths started over 72 h</div></div>
+  </div>
+
+  <div class="files">
+    <div class="file"><code>adata_t0.h5ad</code><span>3,000 × 167 · t = 0 h · 1,000 of each type, none dying</span></div>
+    <div class="file"><code>adata_tfinal.h5ad</code><span>7,970 × 167 · t = 72 h · includes lineage via <code>cell_id</code> / <code>parent_id</code> / <code>birth_h</code></span></div>
+    <div class="file"><code>snapshots.h5ad</code><span>132,548 cell-snapshots × 167 — all 25 time points</span></div>
+    <div class="file"><code>tf_dynamics.tsv</code> <code>movement.gif</code> <code>events.tsv</code> <code>tracks.npz</code> <code>grn_activity.npz</code> <code>lr_flow.npz</code><span>all-TF trajectory table, animation, event log, per-cell tracks, GRN and ligand flux</span></div>
+  </div>
+</section>
+
+<section id="questions">
+  <h2>Two things that look wrong</h2>
+  <p class="sectlede">Both came up reading plot 04d. One is a plotting artifact; the other is a real gap in the rules.</p>
+
+  <div class="qa">
+    <h3>Why is every L–R pair going up?</h3>
+    <p>Mostly because <strong>04d plots a whole-tissue total, not a per-cell rate</strong>. The code sums signalling over every sender and receiver, so the number scales with how many cells exist. The population went 3,000 → 7,970, which is <code>log2 +1.41</code> of the <code>+2.60</code> median rise straight away — on a colour scale capped at ±2, that alone saturates most rows red.</p>
+    <p>Dividing growth out leaves a smaller, and much more interesting, signal. Per receiving cell, <strong>T-cells actually receive less</strong> signalling than at t = 0 (−0.35), macrophages are flat (+0.11), and only tumour cells gain (+0.57). The tumour-to-tumour channel rises +0.77 per tumour cell.</p>
+    <p>That residual is real, and it is the self-sorting from 05a showing up in the gene layer: as tumour self-contact climbs 0.36 → 0.72, tumour cells end up surrounded by other high-expressing tumour cells, so each one receives more ligand even though contacts per cell stay flat at ~4.45. Nothing is inflating — per-type expression actually drifts slightly <em>down</em> (−0.13 tumour, −0.29 T-cell, −0.22 macrophage).</p>
+  </div>
+
+  <div class="qa">
+    <h3>Why aren’t cells dying faster?</h3>
+    <p>Because <strong>the death rules almost never fire</strong>, and nothing couples crowding to death.</p>
+    <p>Both apoptosis rules in <code>rules.yaml</code> use <code>half_max: 3.0</code> with <code>hill_power: 4</code>. The signal is in baseline standard deviations, so a cell has to sit three SDs above its own type’s mean before the rule even reaches half strength — and the 4th-power Hill makes the approach to that point very flat. Only 1.36% of cells clear 3 SD on the apoptosis signal and 0.24% on necrosis.</p>
+    <div class="scroll"><table class="num">
+      <tr><th>signal at 72 h</th><th>median</th><th>95th</th><th>99.9th</th><th>max</th><th>above 3 SD</th></tr>
+      <tr><td>apoptosis</td><td>−0.05</td><td>+2.04</td><td>+4.63</td><td>+5.72</td><td>1.36%</td></tr>
+      <tr><td>necrosis</td><td>+0.35</td><td>+1.91</td><td>+3.17</td><td>+3.39</td><td>0.24%</td></tr>
+      <tr><td>pressure</td><td>+1.44</td><td>+3.46</td><td>+6.08</td><td>+7.15</td><td>9.02%</td></tr>
+    </table></div>
+    <p>The result: the median realised apoptosis rate is <strong>1.18× the base rate</strong>. Deaths are essentially the constant background rate of one per 313 h per cell — 20.5% over 72 h — with the rules contributing almost nothing.</p>
+    <p>The structural gap is in the last row above. Pressure is the one signal that genuinely gets extreme (9% of cells past 3 SD), and it is wired only to <code>division_rate</code>, where it works hard — median division is 2.48e−4/min against a 7.2e−4 base, a 3× suppression. But <strong>there is no pressure → apoptosis rule at all</strong>, so a crowded core stops dividing and then simply sits there. In a real tumour that core would go necrotic. Adding <code>{signal: pressure, behaviour: apoptosis_rate, direction: increases}</code> is the one-line change that would close it.</p>
+  </div>
+</section>
+
+<section>
+  <h2>What the tissue did</h2>
+  <p class="sectlede">Growth, sorting and movement — the behaviour that falls out of the rules rather than being set by them.</p>
+  <div class="grid">
+
+    <div class="card wide">
+      <button class="shot" data-cap="06 · spatial cell types"><img src="plots/06_spatial_cell_types.png" alt="Six spatial snapshots of the tissue from 0 to 72 hours"></button>
+      <div class="cap"><h3><em>06</em> The tissue, six ways through</h3>
+        <p>Cell positions at 0, 15, 30, 42, 57 and 72 h, coloured by type, with dying cells as crosses.</p>
+        <p class="read">The disc roughly doubles in radius and stays a disc. T-cells and macrophages scatter past the rim while the tumour core packs tighter — nothing in the rules asks for that boundary.</p></div>
+    </div>
+
+    <div class="card wide">
+      <button class="shot" data-cap="05a · emergent behaviour"><img src="plots/05a_emergent_behaviour.png" alt="Eight panels of population, rate, segregation and displacement curves over time"></button>
+      <div class="cap"><h3><em>05a</em> Eight things nobody told it to do</h3>
+        <p>Counts, division and death rates, rule-set speed, self-sorting, infiltration, spread and mean squared displacement.</p>
+        <p class="read">The strongest result here: tumour self-contact climbs 0.36 → 0.72 while macrophage self-contact falls 0.39 → 0.23. The tumour sorts itself together and the macrophages disperse through it. Meanwhile tumour division decays 0.041 → 0.030 /h as crowding feeds back on growth.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="07a · cell tracks"><img src="plots/07a_cell_tracks.png" alt="Trajectories of individual tracked cells"></button>
+      <div class="cap"><h3><em>07a</em> Individual cell tracks</h3>
+        <p>Paths of single cells through the run, sampled every 6 min.</p>
+        <p class="read">T-cell tracks are long and persistent, macrophages short and local, tumour cells barely move except by being pushed.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="10 · division and death"><img src="plots/10_division_death_events.png" alt="Division and death events in time and space"></button>
+      <div class="cap"><h3><em>10</em> Where cells divided and died</h3>
+        <p>8,647 divisions and 4,422 death starts, placed in time and space.</p>
+        <p class="read">Division concentrates at the growing rim; death is spread through the crowded interior.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="11 · pressure"><img src="plots/11_pressure.png" alt="Mechanical pressure across the tissue over time"></button>
+      <div class="cap"><h3><em>11</em> Mechanical pressure</h3>
+        <p>Relative pressure per cell, the signal the crowding rules read.</p>
+        <p class="read">A core-to-rim gradient builds as the disc fills — this is what suppresses division in the middle.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="05b · neighbourhood enrichment"><img src="plots/05b_neighbourhood_enrichment.png" alt="Neighbourhood enrichment z-scores between cell types"></button>
+      <div class="cap"><h3><em>05b</em> Who sits next to whom</h3>
+        <p>Contact enrichment between every pair of types, as a z-score against a shuffled tissue.</p>
+        <p class="read">Quantifies the sorting in 05a: strong same-type enrichment for tumour, near-random for the others.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Genes and signalling</h2>
+  <p class="sectlede">The gene layer underneath the behaviour — transcription factors, behaviour modules, GRN edge activity and ligand–receptor traffic, all on the curated network.</p>
+  <div class="grid">
+
+    <div class="card wide">
+      <button class="shot" data-cap="14d · L–R total vs per cell"><img src="plots/14d_lr_per_cell.png" alt="Side by side heatmaps of total and per-cell ligand-receptor signalling, plus per-receiver-type curves"></button>
+      <div class="cap"><h3><em>14d</em> The same data, with growth divided out</h3>
+        <p>Left: the whole-tissue total, as 04d plots it. Middle: the identical pairs per cell. Right: signalling received per cell by receiver type, against the dashed growth curve.</p>
+        <p class="read">The left and middle panels are the same simulation. Almost all of the red on the left is the tissue getting bigger. On the right, only tumour cells end up receiving more; T-cells receive less.</p></div>
+    </div>
+
+    <div class="card wide">
+      <button class="shot" data-cap="14a · all 70 TFs"><img src="plots/14a_all_tfs_over_time.png" alt="All 70 transcription factors over time in all three cell types"></button>
+      <div class="cap"><h3><em>14a</em> All 70 TFs, all three types</h3>
+        <p>Every transcription factor in the curated network, mean log2 against each type’s own t = 0 baseline. Same row order and colour scale in all three panels, so a row reads across types — unlike 04a, which ranks a different 30 TFs per panel.</p>
+        <p class="read">This is the direct answer to “is everything going up?” — it isn’t. The field is mostly pale blue: TFs drift gently <em>down</em>, hardest in T-cells (NFKB1, STAT3, JUN, ELF1, RBPJ, MYC, ETS1). The exceptions stand out: FOS climbs in tumour after ~48 h, BHLHE40 climbs in T-cells, HES1 and SP1 lift slightly in tumour. Note the scale — nothing exceeds ±0.35 log2.</p></div>
+    </div>
+
+    <div class="card wide">
+      <button class="shot" data-cap="14c · GRN edge activity, all types"><img src="plots/14c_grn_edge_activity_all_types.png" alt="GRN edge activity over time for the 60 most dynamic edges in all three cell types"></button>
+      <div class="cap"><h3><em>14c</em> GRN edge activity, all three types</h3>
+        <p>The 60 most dynamic of 973 edges, as change in edge input from t = 0, on a shared scale.</p>
+        <p class="read">Bidirectional and type-specific: SP8→CXCL12, NFKB1→RIPK1 and ELF1→CCR7 rise while RXRA→PAX5 and ZBTB33→SP8 fall. T-cells are the most dynamic type, macrophages nearly static — consistent with macrophages having no division and the slowest speed.</p></div>
+    </div>
+
+    <div class="card wide">
+      <button class="shot" data-cap="14b · all genes by role"><img src="plots/14b_all_genes_by_role.png" alt="All 167 genes grouped by role over time in all three cell types"></button>
+      <div class="cap"><h3><em>14b</em> All 167 genes, grouped by role</h3>
+        <p>Every gene in the network — TFs, ligands, receptors and module targets — in the same layout.</p>
+        <p class="read">Lets you check whether any one role class behaves differently. Ligands and receptors drift down slightly more than TFs do, which is why the per-cell signalling rise in 14d has to come from neighbourhood composition rather than expression.</p></div>
+    </div>
+
+    <div class="card wide">
+      <button class="shot" data-cap="04d · L–R communication"><img src="plots/04d_lr_communication_over_time.png" alt="Heatmap of top ligand-receptor pairs over time and sender-receiver matrices"></button>
+      <div class="cap"><h3><em>04d</em> Ligand–receptor traffic</h3>
+        <p>The 20 busiest L–R pairs over 72 h, with sender → receiver totals at the start and end.</p>
+        <p class="read">Tumour → tumour signalling goes 240k → 1.94M, an 8× rise against a 4.7× rise in tumour cells — signalling grows faster than the population because the core is packing denser. Cadherin and thrombospondin pairs dominate, which is exactly where the new repressive links sit.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="04a · TF expression"><img src="plots/04a_tf_expression_over_time.png" alt="Transcription factor expression trajectories per cell type"></button>
+      <div class="cap"><h3><em>04a</em> Transcription factors over time</h3>
+        <p>Per-type TF trajectories across all 70 TFs in the curated network.</p>
+        <p class="read">Includes the 16 pathway effectors added this build — NFKB1, STAT3, TCF7, LEF1, RBPJ and the rest — which the old 50-TF network had none of.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="04b · module scores"><img src="plots/04b_module_scores_over_time.png" alt="Behaviour module scores over time by cell type"></button>
+      <div class="cap"><h3><em>04b</em> Behaviour modules</h3>
+        <p>Apoptosis, proliferation, migration, chemotaxis and necrosis scores per type.</p>
+        <p class="read">These are the quantities the rules convert into division, death and speed.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="04c · GRN edge activity"><img src="plots/04c_grn_edge_activity_over_time.png" alt="GRN edge activity changes over time"></button>
+      <div class="cap"><h3><em>04c</em> GRN edge activity</h3>
+        <p>Change in each edge’s input (regulator activation × weight) over real time.</p>
+        <p class="read">This is the quantity behind the dynamic-GRN comparison. Edges are fixed; their activity moves with each cell’s state and neighbourhood.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="13 · behaviour drivers"><img src="plots/13_behaviour_drivers.png" alt="Genes most associated with each behaviour"></button>
+      <div class="cap"><h3><em>13</em> What drives each behaviour</h3>
+        <p>Genes most associated with each behaviour; red marks the genes the rules actually read.</p>
+        <p class="read">A sanity check — red genes should rank high. Anything else ranking high got there through the network.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="08 · spatial gene expression"><img src="plots/08_spatial_gene_expression.png" alt="Spatial maps of selected gene expression"></button>
+      <div class="cap"><h3><em>08</em> Genes in space</h3>
+        <p>Selected genes mapped onto cell positions at the final snapshot.</p>
+        <p class="read">Shows whether expression organises spatially rather than just by cell type.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="12 · spatially variable genes"><img src="plots/12_spatially_variable_genes.png" alt="Ranking of spatially variable genes"></button>
+      <div class="cap"><h3><em>12</em> Spatially variable genes</h3>
+        <p>Genes whose expression varies with position more than chance allows.</p>
+        <p class="read">The spatial signal the simulation generates, available to test spatial methods against a known truth.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>States and trajectories</h2>
+  <p class="sectlede">Embeddings, clustering and pseudotime — the standard single-cell views, computed on a dataset where the true time and lineage are known.</p>
+  <div class="grid">
+
+    <div class="card">
+      <button class="shot" data-cap="01 · UMAP"><img src="plots/01_umap.png" alt="UMAP embedding coloured by cell type and time"></button>
+      <div class="cap"><h3><em>01</em> UMAP</h3>
+        <p>Cells embedded and coloured by type and by simulated time.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="03 · pseudotime"><img src="plots/03_pseudotime.png" alt="Diffusion pseudotime compared with true simulated time"></button>
+      <div class="cap"><h3><em>03</em> Pseudotime vs true time</h3>
+        <p>Diffusion pseudotime against the real clock.</p>
+        <p class="read">The script notes the honest caveat: cell types are fixed here, so pseudotime can only track state drift, not differentiation.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="09a · emergent states"><img src="plots/09a_emergent_states.png" alt="Clusters of emergent cell states"></button>
+      <div class="cap"><h3><em>09a</em> Emergent states</h3>
+        <p>Clusters found in expression without being told the types.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="09b · states in space"><img src="plots/09b_states_in_space.png" alt="Emergent states mapped back onto tissue positions"></button>
+      <div class="cap"><h3><em>09b</em> Those states, in the tissue</h3>
+        <p>The 09a clusters mapped back onto position.</p>
+        <p class="read">Tests whether a state found in expression alone corresponds to somewhere real.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>RNA velocity</h2>
+  <p class="sectlede">Velocity recovered by scVelo from the spliced and unspliced counts, checked against the true velocity the simulator recorded — the comparison real data can’t offer.</p>
+  <div class="grid">
+
+    <div class="card">
+      <button class="shot" data-cap="02a · velocity stream, final"><img src="plots/02a_velocity_stream_final.png" alt="Velocity stream plot at the final snapshot"></button>
+      <div class="cap"><h3><em>02a</em> Velocity stream — final snapshot</h3>
+        <p>Inferred velocity field at 72 h.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="02a · velocity stream, pooled"><img src="plots/02a_velocity_stream_pooled.png" alt="Velocity stream plot pooled across snapshots"></button>
+      <div class="cap"><h3><em>02a</em> Velocity stream — pooled</h3>
+        <p>The same, pooled across all 25 snapshots.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="02b · velocity accuracy, final"><img src="plots/02b_velocity_accuracy_final.png" alt="Inferred versus true velocity at the final snapshot"></button>
+      <div class="cap"><h3><em>02b</em> Inferred vs true — final</h3>
+        <p>scVelo’s estimate against the simulator’s recorded truth.</p>
+        <p class="read">This is the point of the exercise: a ground-truth benchmark for velocity.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="02b · velocity accuracy, pooled"><img src="plots/02b_velocity_accuracy_pooled.png" alt="Inferred versus true velocity pooled"></button>
+      <div class="cap"><h3><em>02b</em> Inferred vs true — pooled</h3>
+        <p>The same accuracy check across all snapshots.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="02c · phase portraits, final"><img src="plots/02c_phase_portraits_final.png" alt="Phase portraits of spliced against unspliced counts"></button>
+      <div class="cap"><h3><em>02c</em> Phase portraits — final</h3>
+        <p>Unspliced against spliced per gene, the basis of the velocity model.</p></div>
+    </div>
+
+    <div class="card">
+      <button class="shot" data-cap="02c · phase portraits, pooled"><img src="plots/02c_phase_portraits_pooled.png" alt="Phase portraits pooled across snapshots"></button>
+      <div class="cap"><h3><em>02c</em> Phase portraits — pooled</h3>
+        <p>Pooled across the run, where the loops are easier to see.</p></div>
+    </div>
+
+    <div class="card wide">
+      <button class="shot" data-cap="03b · velocity pseudotime"><img src="plots/03b_velocity_pseudotime.png" alt="Velocity pseudotime against true simulated time"></button>
+      <div class="cap"><h3><em>03b</em> Velocity pseudotime vs true time</h3>
+        <p>Pseudotime derived from the velocity field, against the real clock.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pdeath">
+  <h2>Variant · pressure → apoptosis</h2>
+  <p class="sectlede">A second run adding the one rule the first was missing, so crowding can kill and not just suppress division. Everything else — engine, network, seed, tissue — is identical. <code>configs/rules_pressure_death.yaml</code>, run <code>main_72h_pressure_death</code>.</p>
+
+  <div class="qa">
+    <h3>It closes the feedback loop</h3>
+    <p>In the control, median pressure climbs the whole run with nothing to stop it. With the rule it dips and then <strong>holds steady near +0.9 SD</strong> — crowding kills, which relieves crowding. No overshoot or oscillation, despite dying cells lingering 8.6 h before removal.</p>
+    <div class="scroll"><table class="num">
+      <tr><th>median pressure (SD)</th><th>0 h</th><th>18 h</th><th>36 h</th><th>54 h</th><th>72 h</th></tr>
+      <tr><td>control</td><td>+0.95</td><td>+1.08</td><td>+1.10</td><td>+1.26</td><td>+1.48</td></tr>
+      <tr><td>pressure → death</td><td>+0.95</td><td>+0.87</td><td>+0.76</td><td>+0.82</td><td>+0.91</td></tr>
+    </table></div>
+    <p>Death also moved inward, which is the direction a tumour should show. The control was mildly <em>rim</em>-biased — backwards.</p>
+    <div class="scroll"><table class="num">
+      <tr><th>dying at 72 h</th><th>core r&lt;0.5</th><th>rim r&gt;0.8</th><th>apoptosis rate</th><th>live cells</th><th>radius</th></tr>
+      <tr><td>control</td><td>7.5%</td><td>10.3%</td><td>1.18× base</td><td>7,225</td><td>781 µm</td></tr>
+      <tr><td>pressure → death</td><td>15.7%</td><td>9.2%</td><td>3.17× base</td><td>5,651</td><td>791 µm</td></tr>
+    </table></div>
+    <p>Deaths rose 4,422 → 6,199 while divisions barely moved (8,647 → 8,850): relieving pressure lets the survivors divide more, partly offsetting the loss. The tissue reaches the <strong>same radius with 22% fewer cells</strong> — it expands just as fast and is simply less dense. Mean contacts per cell fall 4.43 → 3.32.</p>
+  </div>
+
+  <div class="qa">
+    <h3>But it is not a necrotic core</h3>
+    <p>Density drops almost uniformly — 0.76 to 0.86 of control in every annulus, only mildly worse at the centre. The packed disc thins everywhere rather than hollowing out, and the radial profile shows why:</p>
+    <div class="scroll"><table class="num">
+      <tr><th>annulus (0 = centre)</th><th>median pressure</th><th>past 3 SD</th><th>dying</th></tr>
+      <tr><td>0.00 – 0.35</td><td>1.23</td><td>3.5%</td><td>15.2%</td></tr>
+      <tr><td>0.35 – 0.50</td><td>1.11</td><td>2.3%</td><td>16.2%</td></tr>
+      <tr><td>0.50 – 0.61</td><td>0.67</td><td>1.7%</td><td>15.7%</td></tr>
+      <tr><td>0.61 – 0.71</td><td>0.10</td><td>0.4%</td><td>13.9%</td></tr>
+      <tr><td>0.71 – 0.79</td><td>0.00</td><td>0.0%</td><td>9.0%</td></tr>
+    </table></div>
+    <p><strong>Pressure is flat across the whole packed region and then falls off a cliff at the rim.</strong> It encodes “inside the tissue”, not “far from the surface”, so it cannot carve a dead centre. A real necrotic core is set by nutrient and oxygen diffusing inward from the surface — that is what produces the ~150–200 µm viable rim in spheroids, and pressure is no proxy for it.</p>
+    <p>So the rule is worth keeping — crowding should kill, and now it does — but the honest name for it is <strong>density regulation</strong>, not necrosis. A diffusion-based distance-from-surface signal, registered through the plugin system alongside the existing <code>distance_from_centre</code>, is what the necrotic version needs.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card wide">
+      <button class="shot" data-cap="pressure→death · 06 spatial"><img src="pdeath/06_spatial_cell_types.png" alt="Spatial snapshots of the pressure-death variant from 0 to 72 hours"></button>
+      <div class="cap"><h3><em>06′</em> The variant tissue through time</h3>
+        <p>The same six time points as 06, for the pressure → apoptosis run.</p>
+        <p class="read">Visibly looser than the control at every point past 30 h, and reaching the same outer radius — the thinning is general, with no dead centre.</p></div>
+    </div>
+    <div class="card">
+      <button class="shot" data-cap="pressure→death · 11 pressure"><img src="pdeath/11_pressure.png" alt="Pressure across the tissue in the variant run"></button>
+      <div class="cap"><h3><em>11′</em> Pressure, now capped</h3>
+        <p>The signal that drives the new rule, in the run where it feeds back.</p></div>
+    </div>
+    <div class="card">
+      <button class="shot" data-cap="pressure→death · 10 division and death"><img src="pdeath/10_division_death_events.png" alt="Division and death events in the variant run"></button>
+      <div class="cap"><h3><em>10′</em> Division and death</h3>
+        <p>6,199 death starts against 8,850 divisions.</p>
+        <p class="read">Compare with 10: death has moved off the rim and into the body of the tissue.</p></div>
+    </div>
+    <div class="card wide">
+      <button class="shot" data-cap="pressure→death · 05a emergent behaviour"><img src="pdeath/05a_emergent_behaviour.png" alt="Emergent behaviour panels for the variant run"></button>
+      <div class="cap"><h3><em>05a′</em> Emergent behaviour, variant</h3>
+        <p>The same eight panels as 05a.</p>
+        <p class="read">The death-rate panel is the one to read against the control: it now sits well above baseline instead of hugging it.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Generated from <code>results/runs/main_72h_curated/</code> — <code>08_run_simulation.py --engine configs/engine_curated.yaml</code> (433 s), then <code>09_analysis_plots.py</code>, <code>10_velocity_plots.py</code> and <code>11_export_endpoints.py</code> and <code>14_tf_dynamics.py</code>. The variant run is <code>results/runs/main_72h_pressure_death/</code>, same pipeline with <code>--rules configs/rules_pressure_death.yaml</code>. Gene network: <code>data/processed/network_curated</code> — 167 genes, 70 TFs, 50 L–R pairs, 171 curated receptor→TF links of which 22 are repressive.</p>
+</footer>
+</div>
+
+<dialog class="lb">
+  <img alt="">
+  <div class="lbcap"><span></span><button type="button">close ✕</button></div>
+</dialog>
+
+<script>
+(function(){
+  var lb = document.querySelector('dialog.lb'),
+      lbi = lb.querySelector('img'),
+      lbc = lb.querySelector('.lbcap span');
+  document.querySelectorAll('button.shot').forEach(function(b){
+    b.addEventListener('click', function(){
+      var img = b.querySelector('img');
+      lbi.src = img.src; lbi.alt = img.alt;
+      lbc.textContent = b.dataset.cap || '';
+      if (lb.showModal) lb.showModal();
+    });
+  });
+  lb.querySelector('button').addEventListener('click', function(){ lb.close(); });
+  lb.addEventListener('click', function(e){ if (e.target === lb) lb.close(); });
+})();
+</script>
